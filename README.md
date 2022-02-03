@@ -6,7 +6,7 @@ Gra jest stworzona na Windows-a a moim głównym celem podczas jej robienia był
 
 Z gamedev – u najbardziej pasjonuje mnie programowanie, zatem głównie skupiłem się na mechanice gry, niż na jej oprawie wizualnej.
 
-Niestety grafike jak i część audio musiałem pobrać z innych projektów, jednak były to projekty publiczne przeznaczone do nauki. Grafikę jedynie musiałem trochę przerobić, by pasowała do klimatu gry. 
+Niestety grafikę jak i część audio musiałem pobrać z innych projektów, gdyż nie jest to moja domena, jednak były to projekty publiczne przeznaczone do nauki. Grafikę jedynie musiałem trochę przerobić, by pasowała do klimatu gry. 
 
 ## Opis gry
 Depther jest platformówką, ale nie byle jaką. W początkowej fazie tworzenia gry bardzo spodobał mi się efekt głębi,
