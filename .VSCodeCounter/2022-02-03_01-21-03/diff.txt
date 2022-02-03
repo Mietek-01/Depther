@@ -1,0 +1,65 @@
+Date : 2022-02-03 01:21:03
+Directory : c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets
+Total : 24 files,  43 codes, 10 comments, 8 blanks, all 61 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| C#       |         24 |         43 |         10 |          8 |         61 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++---------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                                | files      | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                                   |         24 |         43 |         10 |          8 |         61 |
+| MyPackages                                                                                                          |          2 |          1 |         -2 |         -1 |         -2 |
+| MyPackages\Prefabs                                                                                                  |          1 |          0 |         -2 |          0 |         -2 |
+| MyPackages\Prefabs\ObjectsPooler                                                                                    |          1 |          0 |         -2 |          0 |         -2 |
+| MyPackages\Utility                                                                                                  |          1 |          1 |          0 |         -1 |          0 |
+| MyPackages\Utility\UsefulFunctions                                                                                  |          1 |          1 |          0 |         -1 |          0 |
+| Scripts                                                                                                             |         18 |         25 |          3 |         -5 |         23 |
+| Scripts\Items                                                                                                       |         12 |         35 |          4 |          1 |         40 |
+| Scripts\Items\DepthField                                                                                            |          4 |         15 |         -3 |         -3 |          9 |
+| Scripts\Items\Lasers                                                                                                |          4 |         20 |          7 |          4 |         31 |
+| Scripts\Items\MagicalRoad                                                                                           |          2 |        133 |         12 |         51 |        196 |
+| Scripts\Items\MagickRoad                                                                                            |          2 |       -133 |        -12 |        -51 |       -196 |
+| Scripts\Managers                                                                                                    |          1 |          1 |          0 |          0 |          1 |
+| Scripts\Player                                                                                                      |          5 |        -11 |         -1 |         -6 |        -18 |
+| Scripts\Player\Weapon                                                                                               |          1 |          2 |          0 |          0 |          2 |
+| Tests                                                                                                               |          4 |         17 |          9 |         14 |         40 |
+| Tests\EditModeTests                                                                                                 |          2 |         -2 |          0 |          0 |         -2 |
+| Tests\PlayModeTests                                                                                                 |          2 |         19 |          9 |         14 |         42 |
++---------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++---------------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                                                                            | language | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\MyPackages\Prefabs\ObjectsPooler\ObjectsPooler.cs     | C#       |          0 |         -2 |          0 |         -2 |
+| c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\MyPackages\Utility\UsefulFunctions\UsefulFunctions.cs | C#       |          1 |          0 |         -1 |          0 |
+| c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Items\DepthField\DFExternalField.cs           | C#       |          1 |         -3 |         -3 |         -5 |
+| c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Items\DepthField\DFInternalField.cs           | C#       |          3 |         -1 |         -4 |         -2 |
+| c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Items\DepthField\DepthField.cs                | C#       |        -32 |         -8 |        -13 |        -53 |
+| c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Items\DepthField\DepthFieldObject.cs          | C#       |         43 |          9 |         17 |         69 |
+| c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Items\Lasers\AimigMuratSpawner.cs             | C#       |          2 |          6 |         -1 |          7 |
+| c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Items\Lasers\AimingMurat.cs                   | C#       |          5 |         -1 |          2 |          6 |
+| c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Items\Lasers\BasicMurat.cs                    | C#       |          1 |         -2 |          2 |          1 |
+| c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Items\Lasers\Laser.cs                         | C#       |         12 |          4 |          1 |         17 |
+| c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Items\MagicalRoad\MagicalRoad.cs              | C#       |        101 |         11 |         40 |        152 |
+| c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Items\MagicalRoad\MagicalRoadGlyph.cs         | C#       |         32 |          1 |         11 |         44 |
+| c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Items\MagickRoad\MagicalRoad.cs               | C#       |       -101 |        -11 |        -40 |       -152 |
+| c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Items\MagickRoad\MagicalRoadGlyph.cs          | C#       |        -32 |         -1 |        -11 |        -44 |
+| c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Managers\GameplayManager.cs                   | C#       |          1 |          0 |          0 |          1 |
+| c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Player\InputData.cs                           | C#       |          0 |          1 |         -2 |         -1 |
+| c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Player\Player.cs                              | C#       |          7 |         -2 |          2 |          7 |
+| c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Player\PlayerDashMoveCreator.cs               | C#       |        -11 |          0 |         -4 |        -15 |
+| c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Player\PlayerInput.cs                         | C#       |         -9 |          0 |         -2 |        -11 |
+| c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Player\Weapon\Weapon.cs                       | C#       |          2 |          0 |          0 |          2 |
+| c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Tests\EditModeTests\ZonesTests.cs                     | C#       |        -17 |         -3 |         -4 |        -24 |
+| c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Tests\EditModeTests\zone_tests.cs                     | C#       |         15 |          3 |          4 |         22 |
+| c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Tests\PlayModeTests\player_movement_tests.cs          | C#       |        -56 |        -12 |        -24 |        -92 |
+| c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Tests\PlayModeTests\player_tests.cs                   | C#       |         75 |         21 |         38 |        134 |
+| Total                                                                                                               |          |         43 |         10 |          8 |         61 |
++---------------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
