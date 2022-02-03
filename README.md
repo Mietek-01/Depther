@@ -24,6 +24,8 @@ Zdecydowałem, że stworze grę 2D, ale taką która w dynamiczny sposób wykorz
 
 ![Browser Screenshot](https://github.com/Mietek-01/Depther/blob/master/Screens/Z5.2.png)
 
+![Browser Screenshot](https://github.com/Mietek-01/Depther/blob/master/Screens/Z1.1.png)
+
 Myślę, że dzięki temu udało mi się osiągnąć naprawdę fajny efekt, który wyróżnia tę platformówkę na tle innych tj. "Super Mario Bros", którego remake-a 
 swoją drogą stworzyłem bedąc w drugiej liceum 
 [ i znajduje się w tym repozytorium.]
@@ -44,9 +46,9 @@ Projekt gry zawiera ponad 90 skryptów, które w efekcie dają ponad 11 000 lini
 Każdy skrypt jest napisany przeze mnie własnoręcznie, a kilka z nich umieściłem w [Highlighted Scripts](https://github.com/Mietek-01/Depther/tree/master/Highlighted%20Scripts)
 , które w moim odczuciu są najbardziej atrakcyjne i różnorodne oraz kilka moich unit test-ów.
 
-Widok projektu umieszczam poniżej.
+Widok projektu:
 
-[screen z projektu]
+![Browser Screenshot](https://github.com/Mietek-01/Depther/blob/master/Screens/Unity%20Project%20Screen.png)
 
-Na koniec chciałbym dodać, że jestem całkowitym samoukiem, który musiał zmierzyć się ze wszystkim sam oraz któremu pasja pozwoliła stworzyć samodzielnie tak rozbudowaną grę. 
+Na koniec chciałbym dodać, że jestem całkowitym samoukiem, który musiał zmierzyć się ze wszystkim sam oraz któremu to właśnie pasja pozwoliła stworzyć tak rozbudowaną grę samodzielnie.
 
