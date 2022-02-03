@@ -4,7 +4,9 @@
 Jest to moja autorska gra, którą zacząłem tworzyć w lutym 2021 roku z wykorzystaniem silnika Unity. 
 Gra jest stworzona na Windows-a a moim głównym celem podczas jej robienia było nabycie umiejętności z zakresu tworzenia gier. 
 
-Z gamedev – u najbardziej pasjonuje mnie programowanie, zatem głównie skupiłem się na mechanice gry niż na jej oprawie wizualnej.
+Z gamedev – u najbardziej pasjonuje mnie programowanie, zatem głównie skupiłem się na mechanice gry, niż na jej oprawie wizualnej.
+
+Niestety grafike jak i część audio musiałem pobrać z innych projektów, jednak były to projekty publiczne przeznaczone do nauki. Grafikę jedynie musiałem trochę przerobić, by pasowała do klimatu gry. 
 
 ## Opis gry
 Depther jest platformówką, ale nie byle jaką. W początkowej fazie tworzenia gry bardzo spodobał mi się efekt głębi,
@@ -28,7 +30,7 @@ Zdecydowałem, że stworze grę 2D, ale taką która w dynamiczny sposób wykorz
 
 Myślę, że dzięki temu udało mi się osiągnąć naprawdę fajny efekt, który wyróżnia tę platformówkę na tle innych tj. "Super Mario Bros", którego remake-a 
 swoją drogą stworzyłem bedąc w drugiej liceum 
-[ i znajduje się w tym repozytorium.]
+[ i znajduje się w tym repozytorium.](https://github.com/Mietek-01/Super-Mario-Bros-Remake)
 
 Dodatkowo gra zawiera samouczek oraz sprawny system checkpoint-ów dzięki, którym w szybki sposób gracz będzie mógł się odrodzić nie tracąc postępów w rozgrywce. 
 
@@ -43,8 +45,9 @@ Dodatkowo gra zawiera samouczek oraz sprawny system checkpoint-ów dzięki, któ
 ## Opis projektu
 Projekt gry zawiera ponad 90 skryptów, które w efekcie dają ponad 11 000 linijek kodu. 
 
-Każdy skrypt jest napisany przeze mnie własnoręcznie, a kilka z nich umieściłem w [Highlighted Scripts](https://github.com/Mietek-01/Depther/tree/master/Highlighted%20Scripts)
-, które w moim odczuciu są najbardziej atrakcyjne i różnorodne oraz kilka moich unit test-ów.
+Każdy skrypt jest napisany przeze mnie własnoręcznie. W [Highlighted Scripts](https://github.com/Mietek-01/Depther/tree/master/Highlighted%20Scripts)
+umieściłem wszystkie skrypty odpowiedzialne za mechanizm Playera oraz algorytm określania stycznej do punktu kolizji, który znajduje się 
+w skrypcie [UsefulFunctions](https://github.com/Mietek-01/Depther/blob/master/Highlighted%20Scripts/UsefulFunctions/UsefulFunctions.cs). Dodatkowo znajduje się tam jeszcze parę innych skryptów, które w moim odczuciu są najbardziej atrakcyjne i różnorodne oraz kilka moich unit test-ów.
 
 Widok projektu:
 
