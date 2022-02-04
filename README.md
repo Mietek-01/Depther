@@ -6,7 +6,7 @@ Gra jest stworzona na Windows-a a moim głównym celem podczas jej robienia był
 
 Z gamedev – u najbardziej pasjonuje mnie programowanie, zatem głównie skupiłem się na mechanice gry, niż na jej oprawie wizualnej.
 
-Niestety grafikę jak i część audio musiałem pobrać z innych projektów, gdyż nie jest to moja domena, jednak były to projekty publiczne przeznaczone do nauki. Grafikę jedynie musiałem trochę przerobić, by pasowała do klimatu gry. 
+Niestety grafikę jak i część audio musiałem pobrać z innych projektów, gdyż nie jest to moją domeną, jednak były to projekty publiczne przeznaczone do nauki. Grafikę jedynie musiałem trochę przerobić, by pasowała do klimatu gry. 
 
 ## Opis gry
 Depther jest platformówką, ale nie byle jaką. W początkowej fazie tworzenia gry bardzo spodobał mi się efekt głębi,
@@ -35,6 +35,8 @@ swoją drogą stworzyłem bedąc w drugiej liceum
 Dodatkowo gra zawiera samouczek oraz sprawny system checkpoint-ów dzięki, którym w szybki sposób gracz będzie mógł się odrodzić nie tracąc postępów w rozgrywce. 
 
 ![Browser Screenshot](https://github.com/Mietek-01/Depther/blob/master/Screens/Z0.1.png)
+
+Dodatkowo na końcu sekcji "About" w Start Menu umieściłem spis cheat-ów, które pozwalają na łatwą eksploracje świata gry poprzez np. wyłączenie możliwości przyjmowania obrażeń.
 
 ## Odnośniki
 - Jeśli chcesz zagrać możesz pobrać folder Depther.zip z sekcji [Releases](https://github.com/Mietek-01/Depther/releases). Gra jest zrobiona na silniku, więc nie masz się czego obawiać 😉
