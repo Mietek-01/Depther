@@ -49,7 +49,7 @@ Projekt gry zawiera ponad 90 skryptów, które w efekcie dają ponad 11 000 lini
 
 Każdy skrypt jest napisany przeze mnie własnoręcznie. W [Highlighted Scripts](https://github.com/Mietek-01/Depther/tree/master/Highlighted%20Scripts)
 umieściłem wszystkie skrypty odpowiedzialne za mechanizm Playera oraz algorytm określania stycznej do punktu kolizji, który znajduje się 
-w skrypcie [UsefulFunctions](https://github.com/Mietek-01/Depther/blob/master/Highlighted%20Scripts/UsefulFunctions/UsefulFunctions.cs). Dodatkowo znajduje się tam jeszcze parę innych skryptów, które w moim odczuciu są najbardziej atrakcyjne i różnorodne oraz kilka moich unit test-ów.
+w skrypcie [UsefulFunctions](https://github.com/Mietek-01/Depther/blob/master/Highlighted%20Scripts/UsefulFunctions/UsefulFunctions.cs). Dodatkowo znajduje się tam jeszcze parę innych skryptów, które w moim odczuciu są najbardziej atrakcyjne i różnorodne oraz kilka moich testów jednostkowych.
 
 Widok projektu:
 
