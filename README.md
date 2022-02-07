@@ -36,7 +36,7 @@ Dodatkowo gra zawiera samouczek oraz sprawny system checkpoint-ów dzięki, któ
 
 ![Browser Screenshot](https://github.com/Mietek-01/Depther/blob/master/Screens/Z0.1.png)
 
-Dodatkowo na końcu sekcji "About" w Start Menu umieściłem spis cheat-ów, które pozwalają na łatwą eksploracje świata gry poprzez np. wyłączenie możliwości przyjmowania obrażeń.
+W celu łatwiejszej eksploracji świata gry na końcu sekcji "About" w Start Menu umieściłem spis cheat-ów dzięki, którym gracz np. nie będzie mógł przyjmować obrażeń.
 
 ## Odnośniki
 - Jeśli chcesz zagrać możesz pobrać folder Depther.zip z sekcji [Releases](https://github.com/Mietek-01/Depther/releases). Gra jest zrobiona na silniku, więc nie masz się czego obawiać 😉
