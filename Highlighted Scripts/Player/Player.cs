@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[DefaultExecutionOrder(0)]// After PlayerInput script and PlayerDashMoveCreator script
+[DefaultExecutionOrder(0)]// After the PlayerInput script and the PlayerDashMoveCreator script
 public class Player : MonoBehaviour
 {
     [Header("Movement")]
@@ -81,15 +81,8 @@ public class Player : MonoBehaviour
     ReversalSetter aimingControler;
     PlayerDashMoveCreator dashMoveCreator;
 
-    static Player instance;
-
     void Awake()
     {
-        if (instance != null)
-            Debug.LogWarning("You create another player");
-        else
-            instance = this;
-
         SetReferences();
 
         SetData();
