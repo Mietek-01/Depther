@@ -58,7 +58,7 @@ Poniżej zamieszczam spis najciekawszych elementów gry, które w moim mniemaniu
 - Skrypt [Weapon.cs](https://github.com/Mietek-01/Depther/blob/master/Highlighted%20Scripts/Player/Weapon/Weapon.cs) pozwala nadać broni mocy sprawczej.
 
 ### ObjectsPooler
-- Skrypt [ObjectsPooler.cs](https://github.com/Mietek-01/Depther/blob/master/Highlighted%20Scripts/ObjectsPooler/ObjectsPooler.cs) jest moją implementacja techniki "Objects Pooling", która pozwala na wtórne używanie obiektów. Stworzyłem ją w oparciu o wzorzec "Singleton", który gwarantuję występowanie tylko jednej instancji klasy oraz zapewnia do niej globalny dostęp.
+- Skrypt [ObjectsPooler.cs](https://github.com/Mietek-01/Depther/blob/master/Highlighted%20Scripts/ObjectsPooler/ObjectsPooler.cs) jest moją implementacja techniki "Objects Pooling", która pozwala na wtórne używanie obiektów. Stworzyłem ją w oparciu o wzorzec "Singleton", który gwarantuję występowanie tylko jednej instancji klasy oraz zapewnia do niej globalny dostęp. Dodatkowo w celu sprawniejszego pobierania obiektów z "basenu" zastosowałem strukturę danych kolejkę.
 
 ### DepthField
 - Jest to mechanizm, który znajduje się w folderze [DepthField](https://github.com/Mietek-01/Depther/tree/master/Highlighted%20Scripts/DepthField). Jego zadaniem jest "ściągnięcie" obiektu do określonej pozycji "Z", gdy ten tylko wejdzie w jego pole. Pole to składa się z zewnętrznego oraz wewnętrznego collidera w kształcie koła. Algorytm na podstawie odległości danego obiektu od środka tego pola ustawia odpowiednią pozycję "Z" obiektu.
