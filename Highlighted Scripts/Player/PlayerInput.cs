@@ -30,7 +30,7 @@ public interface IPlayerInputManagement
 }
 
 [RequireComponent(typeof(Player))]
-[DefaultExecutionOrder(-10)]// Before Player script and PlayerDashMoveCreator script
+[DefaultExecutionOrder(-10)]// Before the Player script and the PlayerDashMoveCreator script
 public partial class PlayerInput : MonoBehaviour, IPlayerInputData, IPlayerInputManagement
 {
     [SerializeField] ButtonInput jump = new ButtonInput(KeyCode.W, "Jump");
