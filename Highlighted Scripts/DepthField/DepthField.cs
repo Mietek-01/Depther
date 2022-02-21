@@ -3,7 +3,7 @@ using UnityEngine;
 
 public partial class DepthField : MonoBehaviour
 {
-    [Tooltip("On its basis, the entire Z position change algorithm will work")]
+    [Tooltip("On its basis, the entire Z position changing algorithm will work")]
     [SerializeField] Transform waypoint;
 
     [Tooltip("Defines which objects can be affected by the depth field")]
@@ -33,7 +33,7 @@ public partial class DepthField : MonoBehaviour
     }
 
     /// <summary>
-    /// Metoda ta zapisuje obiekt ktory wszedl w moje pole
+    /// Zapisuje obiekt ktory wszedl w moje pole
     /// </summary>
     /// <param name="obj"></param>
     public void AddObject(GameObject obj)
@@ -61,7 +61,7 @@ public partial class DepthField : MonoBehaviour
     }
 
     /// <summary>
-    /// Metoda ta usuwa obiekt z mojego pola
+    /// Usuwam obiekt z mojego pola
     /// </summary>
     /// <param name="obj"></param>
     public void RemoveObject(GameObject obj)

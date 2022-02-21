@@ -4,10 +4,12 @@ public class BackToMyObjectsPooler : MonoBehaviour
 {
     public Transform MyObjectsPooler { get; set; }
 
+    const string RETURN_TO_POOL = "ReturnToPool";
+
     private void OnDisable()
     {
         // I cant change parent here
-        Invoke("ReturnToPool", .05f);
+        Invoke(RETURN_TO_POOL, .05f);
     }
 
     void ReturnToPool()

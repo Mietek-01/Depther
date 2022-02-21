@@ -84,7 +84,8 @@ public partial class PlayerInput : MonoBehaviour, IPlayerInputData, IPlayerInput
     void Update()
     {
         foreach (var input in myInputs)
-            input.Update();
+            if (input.Enabled)
+                input.Update();
     }
 
     public void EnableInputFor(string actionInputName, bool value)

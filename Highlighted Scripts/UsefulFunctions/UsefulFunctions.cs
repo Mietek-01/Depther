@@ -5,15 +5,17 @@ public static class UsefulFunctions
     // Allows to see how the algorithms works. It will be set to false at the end of the algorithm
     public static bool TestMode { get; set; } = false;
 
-    public static bool CountTangentFor(Collision2D collision, Vector3 objectPosition
+    #region Tangent Finding Algorithm
+
+    public static bool FindTangentFor(Collision2D collision, Vector3 objectPosition
         , out Vector3 tangentPoint, out Quaternion tangentDirection, int layer)
     {
         if (TestMode) Debug.Log("<color=blue>----Start counting the tanget-----</color>");
 
         tangentDirection = Quaternion.identity;
 
-        // ----- I need to find a tangent point. This is the core of the whole algorithm ------ //    
-        tangentPoint = CountTangentPoint(collision, ref objectPosition, ref layer);
+        // --- I need to find a tangent point. This is the core of the whole algorithm --- //    
+        tangentPoint = CalculateTangentPoint(collision, ref objectPosition, ref layer);
 
         // Draw the collision direction
         if (TestMode) Debug.DrawRay(objectPosition, tangentPoint - objectPosition, Color.yellow);
@@ -27,10 +29,10 @@ public static class UsefulFunctions
         // Draw the translation
         if (TestMode) Debug.DrawRay(tangentPoint, translation, Color.blue);
 
-        // --- Count the angle of tangent --- //
+        // --- Calculate the angle of tangent --- //
         float angle;
 
-        if (!CountTangentAngle(out angle, ref translatedTangentPoint, ref layer))
+        if (!CalculateTangentAngle(out angle, ref translatedTangentPoint, ref layer))
         {
             if (TestMode) Debug.LogWarning("I cant count the tangent for " + collision.gameObject.name
                   + " with the angle: " + collision.transform.eulerAngles.z);
@@ -38,14 +40,13 @@ public static class UsefulFunctions
         }
 
         // --- Check if should I reflect the tangent --- //
-        bool reflection = ShouldIReflectInAxes(ref angle, ref translatedTangentPoint, ref translation);
+        bool reflect = ShouldIReflectInAxes(ref angle, ref translatedTangentPoint, ref translation);
 
-        if (reflection)
+        if (reflect)
             if (TestMode) Debug.Log("I have made the reflection in axes");
 
         // Assign the tangent data
-        tangentDirection = Quaternion.Euler(reflection ? new Vector3(180, 180, angle)
-            : new Vector3(0, 0, angle));
+        tangentDirection = Quaternion.Euler(reflect ? new Vector3(180, 180, angle) : new Vector3(0, 0, angle));
 
         // I cant use objectPosition.z because the bullet in the depth field
         // have not yet reached the z position with the colliding object
@@ -92,7 +93,7 @@ public static class UsefulFunctions
         return B_Coefficient > 0f;
     }
 
-    static bool CountTangentAngle(out float angle, ref Vector2 translatedTangentPoint, ref int layer)
+    static bool CalculateTangentAngle(out float angle, ref Vector2 translatedTangentPoint, ref int layer)
     {
         // I start the algorithm with an angle is equal 90. I will decrease this angle by 1
         // until I find my tangent or the angle will reach -90. Decreasing by one can be problematic for 
@@ -151,7 +152,7 @@ public static class UsefulFunctions
         return false;
     }
 
-    static Vector2 CountTangentPoint(Collision2D collision, ref Vector3 objectPosition, ref int layer)
+    static Vector2 CalculateTangentPoint(Collision2D collision, ref Vector3 objectPosition, ref int layer)
     {
         // It is inaccurate because it may be be inside or outsie of the collider
         Vector2 collsionPoint = collision.GetContact(0).point;
@@ -176,6 +177,8 @@ public static class UsefulFunctions
 
         return collsionPoint;
     }
+
+    #endregion
 
     public static float GetLengthOfClip(Animator anim, string clipName)
     {

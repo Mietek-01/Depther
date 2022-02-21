@@ -15,7 +15,7 @@ public class PlayerBullet : MonoBehaviour
     [SerializeField] protected GameObject enemyHitFX;
     [SerializeField] protected AudioClip enemyHitClip;
 
-    protected event Action<Enemy , Vector2> OnEnemyCollision;
+    protected event Action<Enemy, Vector2> OnEnemyCollision;
     protected event Action<Collision2D> OnPlatformCollision;
 
     int whatIsPlatform;
@@ -31,8 +31,8 @@ public class PlayerBullet : MonoBehaviour
 
     // Start is called before the first frame update
     protected virtual void Start()
-    {        
-        OnEnemyCollision += (enemy , collisionPoint) =>
+    {
+        OnEnemyCollision += (enemy, collisionPoint) =>
         {
             // Hit enemy
             enemy.TakeDamage(damage);
@@ -40,13 +40,13 @@ public class PlayerBullet : MonoBehaviour
             hitEnemy = true;
 
             // Still alive
-            if (enemy.Health > 0) 
+            if (enemy.Health > 0)
             {
                 var hitFX = Instantiate(enemyHitFX, enemy.transform.position
                     , Quaternion.identity, enemy.transform);
 
                 Destroy(hitFX, 1f);
-                
+
                 // Play a sound
                 AudioManager.PlaySFX(enemyHitClip);
             }
@@ -63,7 +63,7 @@ public class PlayerBullet : MonoBehaviour
             Vector3 FXPosition;
             Quaternion FXDirection;
 
-            if (UsefulFunctions.CountTangentFor(collision, transform.position, out FXPosition
+            if (UsefulFunctions.FindTangentFor(collision, transform.position, out FXPosition
                 , out FXDirection, whatIsPlatform))
             {
                 ObjectsPooler.PlayParticleSystem(spatterFXName, FXPosition, FXDirection
@@ -89,7 +89,7 @@ public class PlayerBullet : MonoBehaviour
     {
         if (collision.gameObject.layer == whatIsPlatform)
             OnPlatformCollision.Invoke(collision);
-        else if(collision.gameObject.layer == whatIsEnemy)
+        else if (collision.gameObject.layer == whatIsEnemy)
         {
             Enemy enemy = collision.gameObject.GetComponent<Enemy>();
 

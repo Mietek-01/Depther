@@ -1,10 +1,10 @@
 # Details
 
-Date : 2022-02-03 01:21:03
+Date : 2022-02-21 19:20:11
 
 Directory c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets
 
-Total : 93 files,  8010 codes, 749 comments, 2743 blanks, all 11502 lines
+Total : 97 files,  7992 codes, 747 comments, 2747 blanks, all 11486 lines
 
 [summary](results.md) / details / [diff summary](diff.md) / [diff details](diff-details.md)
 
@@ -20,11 +20,11 @@ Total : 93 files,  8010 codes, 749 comments, 2743 blanks, all 11502 lines
 | [Assets/MyPackages/Prefabs/CloudsGenerator/CloudsGenerator.cs](/Assets/MyPackages/Prefabs/CloudsGenerator/CloudsGenerator.cs) | C# | 166 | 22 | 54 | 242 |
 | [Assets/MyPackages/Prefabs/FPSCounter/FPSCounter.cs](/Assets/MyPackages/Prefabs/FPSCounter/FPSCounter.cs) | C# | 41 | 3 | 12 | 56 |
 | [Assets/MyPackages/Prefabs/GlobalCursor/GlobalCursor.cs](/Assets/MyPackages/Prefabs/GlobalCursor/GlobalCursor.cs) | C# | 85 | 1 | 27 | 113 |
-| [Assets/MyPackages/Prefabs/ObjectsPooler/BackToMyObjectsPooler.cs](/Assets/MyPackages/Prefabs/ObjectsPooler/BackToMyObjectsPooler.cs) | C# | 13 | 1 | 4 | 18 |
-| [Assets/MyPackages/Prefabs/ObjectsPooler/ObjectsPooler.cs](/Assets/MyPackages/Prefabs/ObjectsPooler/ObjectsPooler.cs) | C# | 124 | 24 | 43 | 191 |
+| [Assets/MyPackages/Prefabs/ObjectsPooler/BackToMyObjectsPooler.cs](/Assets/MyPackages/Prefabs/ObjectsPooler/BackToMyObjectsPooler.cs) | C# | 14 | 1 | 5 | 20 |
+| [Assets/MyPackages/Prefabs/ObjectsPooler/ObjectsPooler.cs](/Assets/MyPackages/Prefabs/ObjectsPooler/ObjectsPooler.cs) | C# | 107 | 22 | 41 | 170 |
 | [Assets/MyPackages/Prefabs/Trigger/Trigger.cs](/Assets/MyPackages/Prefabs/Trigger/Trigger.cs) | C# | 28 | 0 | 10 | 38 |
 | [Assets/MyPackages/Utility/ReversalSetter/ReversalSetter.cs](/Assets/MyPackages/Utility/ReversalSetter/ReversalSetter.cs) | C# | 34 | 7 | 16 | 57 |
-| [Assets/MyPackages/Utility/UsefulFunctions/UsefulFunctions.cs](/Assets/MyPackages/Utility/UsefulFunctions/UsefulFunctions.cs) | C# | 104 | 52 | 55 | 211 |
+| [Assets/MyPackages/Utility/UsefulFunctions/UsefulFunctions.cs](/Assets/MyPackages/Utility/UsefulFunctions/UsefulFunctions.cs) | C# | 105 | 52 | 57 | 214 |
 | [Assets/Scripts/Controllers/PauseMenuController.cs](/Assets/Scripts/Controllers/PauseMenuController.cs) | C# | 90 | 3 | 28 | 121 |
 | [Assets/Scripts/Controllers/ReviveController.cs](/Assets/Scripts/Controllers/ReviveController.cs) | C# | 131 | 13 | 50 | 194 |
 | [Assets/Scripts/Controllers/WinLoseController.cs](/Assets/Scripts/Controllers/WinLoseController.cs) | C# | 99 | 4 | 39 | 142 |
@@ -39,7 +39,7 @@ Total : 93 files,  8010 codes, 749 comments, 2743 blanks, all 11502 lines
 | [Assets/Scripts/Items/DepthField/DFExternalField.cs](/Assets/Scripts/Items/DepthField/DFExternalField.cs) | C# | 67 | 16 | 21 | 104 |
 | [Assets/Scripts/Items/DepthField/DFInternalField.cs](/Assets/Scripts/Items/DepthField/DFInternalField.cs) | C# | 32 | 6 | 8 | 46 |
 | [Assets/Scripts/Items/DepthField/DepthField.cs](/Assets/Scripts/Items/DepthField/DepthField.cs) | C# | 68 | 19 | 22 | 109 |
-| [Assets/Scripts/Items/DepthField/DepthFieldObject.cs](/Assets/Scripts/Items/DepthField/DepthFieldObject.cs) | C# | 43 | 9 | 17 | 69 |
+| [Assets/Scripts/Items/DepthField/DepthFieldObject.cs](/Assets/Scripts/Items/DepthField/DepthFieldObject.cs) | C# | 44 | 9 | 18 | 71 |
 | [Assets/Scripts/Items/Lasers/AimigMuratSpawner.cs](/Assets/Scripts/Items/Lasers/AimigMuratSpawner.cs) | C# | 117 | 7 | 36 | 160 |
 | [Assets/Scripts/Items/Lasers/AimingMurat.cs](/Assets/Scripts/Items/Lasers/AimingMurat.cs) | C# | 107 | 3 | 32 | 142 |
 | [Assets/Scripts/Items/Lasers/BasicMurat.cs](/Assets/Scripts/Items/Lasers/BasicMurat.cs) | C# | 83 | 4 | 24 | 111 |
@@ -65,12 +65,16 @@ Total : 93 files,  8010 codes, 749 comments, 2743 blanks, all 11502 lines
 | [Assets/Scripts/Managers/UIManager.cs](/Assets/Scripts/Managers/UIManager.cs) | C# | 71 | 1 | 20 | 92 |
 | [Assets/Scripts/Player/Bullets/PlayerBullet.cs](/Assets/Scripts/Player/Bullets/PlayerBullet.cs) | C# | 90 | 5 | 26 | 121 |
 | [Assets/Scripts/Player/Bullets/StrongPlayerBulet.cs](/Assets/Scripts/Player/Bullets/StrongPlayerBulet.cs) | C# | 54 | 2 | 27 | 83 |
-| [Assets/Scripts/Player/InputData.cs](/Assets/Scripts/Player/InputData.cs) | C# | 118 | 8 | 31 | 157 |
+| [Assets/Scripts/Player/InputData/InputData.cs](/Assets/Scripts/Player/InputData/InputData.cs) | C# | 34 | 6 | 11 | 51 |
+| [Assets/Scripts/Player/InputData/PlayerInput.AxisInput.cs](/Assets/Scripts/Player/InputData/PlayerInput.AxisInput.cs) | C# | 17 | 0 | 4 | 21 |
+| [Assets/Scripts/Player/InputData/PlayerInput.ButtonInput.cs](/Assets/Scripts/Player/InputData/PlayerInput.ButtonInput.cs) | C# | 22 | 1 | 7 | 30 |
+| [Assets/Scripts/Player/InputData/PlayerInput.DoubleTapInput.cs](/Assets/Scripts/Player/InputData/PlayerInput.DoubleTapInput.cs) | C# | 27 | 1 | 8 | 36 |
+| [Assets/Scripts/Player/InputData/PlayerInput.MouseInput.cs](/Assets/Scripts/Player/InputData/PlayerInput.MouseInput.cs) | C# | 18 | 0 | 5 | 23 |
 | [Assets/Scripts/Player/Others/DismemberedPlayer.cs](/Assets/Scripts/Player/Others/DismemberedPlayer.cs) | C# | 26 | 2 | 9 | 37 |
 | [Assets/Scripts/Player/Others/Echo.cs](/Assets/Scripts/Player/Others/Echo.cs) | C# | 29 | 0 | 10 | 39 |
-| [Assets/Scripts/Player/Player.cs](/Assets/Scripts/Player/Player.cs) | C# | 381 | 16 | 138 | 535 |
+| [Assets/Scripts/Player/Player.cs](/Assets/Scripts/Player/Player.cs) | C# | 376 | 16 | 136 | 528 |
 | [Assets/Scripts/Player/PlayerDashMoveCreator.cs](/Assets/Scripts/Player/PlayerDashMoveCreator.cs) | C# | 167 | 19 | 58 | 244 |
-| [Assets/Scripts/Player/PlayerInput.cs](/Assets/Scripts/Player/PlayerInput.cs) | C# | 66 | 2 | 32 | 100 |
+| [Assets/Scripts/Player/PlayerInput.cs](/Assets/Scripts/Player/PlayerInput.cs) | C# | 67 | 2 | 32 | 101 |
 | [Assets/Scripts/Player/RevivingHeart/RevivingHeart.cs](/Assets/Scripts/Player/RevivingHeart/RevivingHeart.cs) | C# | 40 | 3 | 14 | 57 |
 | [Assets/Scripts/Player/Weapon/Weapon.cs](/Assets/Scripts/Player/Weapon/Weapon.cs) | C# | 183 | 20 | 65 | 268 |
 | [Assets/Scripts/Player/Weapon/WeaponCollider.cs](/Assets/Scripts/Player/Weapon/WeaponCollider.cs) | C# | 17 | 1 | 8 | 26 |

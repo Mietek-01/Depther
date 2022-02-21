@@ -19,6 +19,8 @@ public partial class DepthField
         // Jest to najwazniejsza zmienna. Dzieki niej okreslam ktory DF staje sie myCurrentDepthField
         float percentDistanceFromMyCurrentDF = 0f;
 
+        Vector3 newPosition;
+
         public DepthFieldObject(GameObject obj)
         {
             NumberOfMyFields = 1;
@@ -27,7 +29,7 @@ public partial class DepthField
 
         public void SetZPosition(DepthField sentDF, float newZposition)
         {
-            // Zmienic moze tylko moj myCurrentDepthField
+            // Zmienic moze tylko myCurrentDepthField
             if (sentDF == myCurrentDepthField)
             {
                 // Obiekt zostal zniszczony
@@ -37,7 +39,7 @@ public partial class DepthField
                     return;
                 }
 
-                Vector3 newPosition = Object.transform.position;
+                newPosition = Object.transform.position;
                 newPosition.z = newZposition;
 
                 Object.transform.position = newPosition;
@@ -46,7 +48,7 @@ public partial class DepthField
 
         public void UpdateZPosition(DepthField sentDF, float newZposition, float percentDistanceFromSentDF)
         {
-            // Gdy updatuje inny depthField i ma on wieksza priorytetowosc 
+            // Gdy aktualizuje inny depthField i ma on wieksza priorytetowosc 
             // tzn obiekt jest blizej niego to one staje sie myCurrentDepthField
 
             if (sentDF != myCurrentDepthField && percentDistanceFromSentDF > percentDistanceFromMyCurrentDF)
@@ -56,7 +58,7 @@ public partial class DepthField
             {
                 percentDistanceFromMyCurrentDF = percentDistanceFromSentDF;
 
-                Vector3 newPosition = Object.transform.position;
+                newPosition = Object.transform.position;
                 newPosition.z = newZposition;
 
                 Object.transform.position = newPosition;

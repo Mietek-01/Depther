@@ -8,11 +8,11 @@
 "c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\MyPackages\Prefabs\CloudsGenerator\CloudsGenerator.cs", "C#", 166, 22, 54, 242
 "c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\MyPackages\Prefabs\FPSCounter\FPSCounter.cs", "C#", 41, 3, 12, 56
 "c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\MyPackages\Prefabs\GlobalCursor\GlobalCursor.cs", "C#", 85, 1, 27, 113
-"c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\MyPackages\Prefabs\ObjectsPooler\BackToMyObjectsPooler.cs", "C#", 13, 1, 4, 18
-"c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\MyPackages\Prefabs\ObjectsPooler\ObjectsPooler.cs", "C#", 124, 24, 43, 191
+"c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\MyPackages\Prefabs\ObjectsPooler\BackToMyObjectsPooler.cs", "C#", 14, 1, 5, 20
+"c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\MyPackages\Prefabs\ObjectsPooler\ObjectsPooler.cs", "C#", 107, 22, 41, 170
 "c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\MyPackages\Prefabs\Trigger\Trigger.cs", "C#", 28, 0, 10, 38
 "c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\MyPackages\Utility\ReversalSetter\ReversalSetter.cs", "C#", 34, 7, 16, 57
-"c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\MyPackages\Utility\UsefulFunctions\UsefulFunctions.cs", "C#", 104, 52, 55, 211
+"c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\MyPackages\Utility\UsefulFunctions\UsefulFunctions.cs", "C#", 105, 52, 57, 214
 "c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Controllers\PauseMenuController.cs", "C#", 90, 3, 28, 121
 "c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Controllers\ReviveController.cs", "C#", 131, 13, 50, 194
 "c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Controllers\WinLoseController.cs", "C#", 99, 4, 39, 142
@@ -27,7 +27,7 @@
 "c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Items\DepthField\DFExternalField.cs", "C#", 67, 16, 21, 104
 "c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Items\DepthField\DFInternalField.cs", "C#", 32, 6, 8, 46
 "c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Items\DepthField\DepthField.cs", "C#", 68, 19, 22, 109
-"c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Items\DepthField\DepthFieldObject.cs", "C#", 43, 9, 17, 69
+"c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Items\DepthField\DepthFieldObject.cs", "C#", 44, 9, 18, 71
 "c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Items\Lasers\AimigMuratSpawner.cs", "C#", 117, 7, 36, 160
 "c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Items\Lasers\AimingMurat.cs", "C#", 107, 3, 32, 142
 "c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Items\Lasers\BasicMurat.cs", "C#", 83, 4, 24, 111
@@ -53,12 +53,16 @@
 "c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Managers\UIManager.cs", "C#", 71, 1, 20, 92
 "c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Player\Bullets\PlayerBullet.cs", "C#", 90, 5, 26, 121
 "c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Player\Bullets\StrongPlayerBulet.cs", "C#", 54, 2, 27, 83
-"c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Player\InputData.cs", "C#", 118, 8, 31, 157
+"c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Player\InputData\InputData.cs", "C#", 34, 6, 11, 51
+"c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Player\InputData\PlayerInput.AxisInput.cs", "C#", 17, 0, 4, 21
+"c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Player\InputData\PlayerInput.ButtonInput.cs", "C#", 22, 1, 7, 30
+"c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Player\InputData\PlayerInput.DoubleTapInput.cs", "C#", 27, 1, 8, 36
+"c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Player\InputData\PlayerInput.MouseInput.cs", "C#", 18, 0, 5, 23
 "c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Player\Others\DismemberedPlayer.cs", "C#", 26, 2, 9, 37
 "c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Player\Others\Echo.cs", "C#", 29, 0, 10, 39
-"c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Player\Player.cs", "C#", 381, 16, 138, 535
+"c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Player\Player.cs", "C#", 376, 16, 136, 528
 "c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Player\PlayerDashMoveCreator.cs", "C#", 167, 19, 58, 244
-"c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Player\PlayerInput.cs", "C#", 66, 2, 32, 100
+"c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Player\PlayerInput.cs", "C#", 67, 2, 32, 101
 "c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Player\RevivingHeart\RevivingHeart.cs", "C#", 40, 3, 14, 57
 "c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Player\Weapon\Weapon.cs", "C#", 183, 20, 65, 268
 "c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Player\Weapon\WeaponCollider.cs", "C#", 17, 1, 8, 26
@@ -92,4 +96,4 @@
 "c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Zone\Zone.cs", "C#", 171, 21, 70, 262
 "c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Tests\EditModeTests\zone_tests.cs", "C#", 15, 3, 4, 22
 "c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Tests\PlayModeTests\player_tests.cs", "C#", 75, 21, 38, 134
-"Total", "-", 8010, 749, 2743, 11502
+"Total", "-", 7992, 747, 2747, 11486

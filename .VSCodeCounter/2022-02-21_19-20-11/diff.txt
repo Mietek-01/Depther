@@ -1,0 +1,46 @@
+Date : 2022-02-21 19:20:11
+Directory : c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets
+Total : 12 files,  -18 codes, -2 comments, 4 blanks, all -16 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| C#       |         12 |        -18 |         -2 |          4 |        -16 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++-------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                                    | files      | code       | comment    | blank      | total      |
++-------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                                       |         12 |        -18 |         -2 |          4 |        -16 |
+| MyPackages                                                                                                              |          3 |        -15 |         -2 |          1 |        -16 |
+| MyPackages\Prefabs                                                                                                      |          2 |        -16 |         -2 |         -1 |        -19 |
+| MyPackages\Prefabs\ObjectsPooler                                                                                        |          2 |        -16 |         -2 |         -1 |        -19 |
+| MyPackages\Utility                                                                                                      |          1 |          1 |          0 |          2 |          3 |
+| MyPackages\Utility\UsefulFunctions                                                                                      |          1 |          1 |          0 |          2 |          3 |
+| Scripts                                                                                                                 |          9 |         -3 |          0 |          3 |          0 |
+| Scripts\Items                                                                                                           |          1 |          1 |          0 |          1 |          2 |
+| Scripts\Items\DepthField                                                                                                |          1 |          1 |          0 |          1 |          2 |
+| Scripts\Player                                                                                                          |          8 |         -4 |          0 |          2 |         -2 |
+| Scripts\Player\InputData                                                                                                |          5 |        118 |          8 |         35 |        161 |
++-------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-------------------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                                                                                | language | code       | comment    | blank      | total      |
++-------------------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\MyPackages\Prefabs\ObjectsPooler\BackToMyObjectsPooler.cs | C#       |          1 |          0 |          1 |          2 |
+| c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\MyPackages\Prefabs\ObjectsPooler\ObjectsPooler.cs         | C#       |        -17 |         -2 |         -2 |        -21 |
+| c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\MyPackages\Utility\UsefulFunctions\UsefulFunctions.cs     | C#       |          1 |          0 |          2 |          3 |
+| c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Items\DepthField\DepthFieldObject.cs              | C#       |          1 |          0 |          1 |          2 |
+| c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Player\InputData.cs                               | C#       |       -118 |         -8 |        -31 |       -157 |
+| c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Player\InputData\InputData.cs                     | C#       |         34 |          6 |         11 |         51 |
+| c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Player\InputData\PlayerInput.AxisInput.cs         | C#       |         17 |          0 |          4 |         21 |
+| c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Player\InputData\PlayerInput.ButtonInput.cs       | C#       |         22 |          1 |          7 |         30 |
+| c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Player\InputData\PlayerInput.DoubleTapInput.cs    | C#       |         27 |          1 |          8 |         36 |
+| c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Player\InputData\PlayerInput.MouseInput.cs        | C#       |         18 |          0 |          5 |         23 |
+| c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Player\Player.cs                                  | C#       |         -5 |          0 |         -2 |         -7 |
+| c:\Users\micha\Desktop\Unity Projects\Aktualne\Depther\Assets\Scripts\Player\PlayerInput.cs                             | C#       |          1 |          0 |          0 |          1 |
+| Total                                                                                                                   |          |        -18 |         -2 |          4 |        -16 |
++-------------------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
