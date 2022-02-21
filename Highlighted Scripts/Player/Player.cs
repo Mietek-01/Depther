@@ -485,7 +485,7 @@ public class Player : MonoBehaviour
 
         rb.velocity = Vector2.zero;
 
-        // I can want to freeze the player with physics as wall ( e.g. during the ZS Field)
+        // I may want to freeze the player with physics as wall ( e.g. during the ZS Field)
         if (withRigidBody)
             rb.simulated = !value;
     }
