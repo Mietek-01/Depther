@@ -2,7 +2,7 @@ using Cinemachine;
 using UnityEngine;
 
 [RequireComponent(typeof(Player))]
-[DefaultExecutionOrder(-5)]// Before Player script
+[DefaultExecutionOrder(-5)]// Before the Player script
 public class PlayerDashMoveCreator : MonoBehaviour
 {
     [SerializeField] float duration = .12f;
