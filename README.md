@@ -44,7 +44,7 @@ W celu łatwiejszej eksploracji świata gry na końcu sekcji "About" w Start Men
 - W [VSCodeCounter](https://github.com/Mietek-01/Depther/blob/master/.VSCodeCounter/2022-02-21_19-20-11/results.md) znajduje się spis wszystkich skryptów gry.
 
 ## Opis projektu
-Projekt gry zawiera ponad 90 skryptów (11 000 linijek kodu), które własnoręcznie napisałem. Przez cały proces tworzenia "Depthera" duża wagę przywiązywałem do refactoringu, gdyż jako programiście bardzo zależało mi na jakości jak również czystości kodu. 
+Projekt gry zawiera ponad 90 skryptów (11 000 linijek kodu), które własnoręcznie napisałem. Przez cały proces tworzenia "Depthera" dużą wagę przywiązywałem do refactoringu, gdyż jako programiście bardzo zależało mi na jakości jak również czystości kodu. 
 
 Większość mechanizmów, które w grze się znajdują musiałem wielokrotnie przebudowywać, gdyż mój kod nie nadążał za wzrostem mojej wiedzy jak i doświadczenia. Zdaję sobie sprawę, że i teraz wiele rzeczy napisał bym inaczej zwłaszcza, że o wzorcach projektowych, zasadach SOLID, Unit Test-ach oraz wzorcu DI zaczołem uczyć się, gdy moja gra była już praktycznie skończona.
 
