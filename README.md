@@ -2,11 +2,11 @@
 ![Browser Screenshot](https://github.com/Mietek-01/Depther/blob/master/Screens/Start%20Menu.png)
 
 Jest to moja autorska gra, którą zacząłem tworzyć w lutym 2021 roku z wykorzystaniem silnika Unity. 
-Gra jest stworzona na Windows-a a moim głównym celem podczas jej robienia było nabycie umiejętności z zakresu tworzenia gier. 
+Gra jest stworzona na Windows-a, a moim głównym celem podczas jej robienia było nabycie umiejętności z zakresu tworzenia gier. 
 
 Z gamedev – u najbardziej pasjonuje mnie programowanie, zatem głównie skupiłem się na mechanice gry, niż na jej oprawie wizualnej.
 
-Niestety grafikę jak i część audio musiałem pobrać z innych projektów, gdyż nie jest to moją domeną, jednak były to projekty publiczne przeznaczone do nauki. Grafikę jedynie musiałem trochę przerobić, by pasowała do klimatu gry. 
+Niestety grafikę oraz audio musiałem pobrać z innych projektów, jednak były to projekty publiczne przeznaczone do nauki. Grafikę jedynie musiałem trochę przerobić, by pasowała do klimatu gry. 
 
 ## Opis gry
 Depther jest platformówką, ale nie byle jaką. W początkowej fazie tworzenia gry bardzo spodobał mi się efekt głębi,
@@ -39,21 +39,40 @@ Dodatkowo gra zawiera samouczek oraz sprawny system checkpoint-ów dzięki, któ
 W celu łatwiejszej eksploracji świata gry na końcu sekcji "About" w Start Menu umieściłem spis cheat-ów dzięki, którym gracz np. nie będzie mógł przyjmować obrażeń.
 
 ## Odnośniki
+- Razem z kolegą stworzyliśmy amatorski trailer mojej gry i znajduje się na youtube [o tutaj](https://youtu.be/bA7vMUqEdhA).
 - Jeśli chcesz zagrać możesz pobrać folder Depther.zip z sekcji [Releases](https://github.com/Mietek-01/Depther/releases). Gra jest zrobiona na silniku, więc nie masz się czego obawiać 😉
-- W owym repozytorium znajdują się foldery [Screens](https://github.com/Mietek-01/Depther/tree/master/Screens) oraz [Gameplay](https://github.com/Mietek-01/Depther/tree/master/Gameplay)
-, dzięki którym możesz dokładniej zobaczyć jak gra się prezentuje.
-- W [VSCodeCounter](https://github.com/Mietek-01/Depther/blob/master/.VSCodeCounter/2022-02-03_01-21-03/results.md) znajduje się spis wszystkich skryptów oraz ilości linijek jakie zawierają.
+- W [VSCodeCounter](https://github.com/Mietek-01/Depther/blob/master/.VSCodeCounter/2022-02-21_19-20-11/results.md) znajduje się spis wszystkich skryptów gry.
 
 ## Opis projektu
-Projekt gry zawiera ponad 90 skryptów, które w efekcie dają ponad 11 000 linijek kodu. 
+Projekt gry zawiera ponad 90 skryptów (11 000 linijek kodu), które własnoręcznie napisałem. Przez cały proces tworzenia "Depthera" duża wagę przywiązywałem do refactoringu, gdyż jako programiście bardzo zależało mi na jakości jak również czystości kodu. 
 
-Każdy skrypt jest napisany przeze mnie własnoręcznie. W [Highlighted Scripts](https://github.com/Mietek-01/Depther/tree/master/Highlighted%20Scripts)
-umieściłem wszystkie skrypty odpowiedzialne za mechanizm Playera oraz algorytm określania stycznej do punktu kolizji, który znajduje się 
-w skrypcie [UsefulFunctions](https://github.com/Mietek-01/Depther/blob/master/Highlighted%20Scripts/UsefulFunctions/UsefulFunctions.cs). Dodatkowo znajduje się tam jeszcze parę innych skryptów, które w moim odczuciu są najbardziej atrakcyjne i różnorodne oraz kilka moich testów jednostkowych.
+Większość mechanizmów, które w grze się znajdują musiałem wielokrotnie przebudowywać, gdyż mój kod nie nadążał za wzrostem mojej wiedzy jak i doświadczenia. Zdaję sobie sprawę, że i teraz wiele rzeczy napisał bym inaczej zwłaszcza, że o wzorcach projektowych, zasadach SOLID, Unit Test-ach oraz wzorcu DI zaczołem uczyć się, gdy moja gra była już praktycznie skończona.
 
-Widok projektu:
+Poniżej zamieszczam spis najciekawszych elementów gry, które w moim mniemaniu są najbardziej warte pokazania. Wszystkie przedstawiane skrypty znajdują się w folderze [Highlighted Scripts](https://github.com/Mietek-01/Depther/tree/master/Highlighted%20Scripts).
+
+### Mechanizm Player-a
+- Najważniejsza część znajduje się w skrypcie [Player.cs](https://github.com/Mietek-01/Depther/blob/master/Highlighted%20Scripts/Player/Player.cs). W nim zastosowałem wzorzec DI, poprzez użycie interfejsu IPlayerInputData. Wtedy właśnie doceniłem rolę i siłę tego wzorca oraz pozwoliło mi to na napisanie kilku testów jednostkowych.
+- Za pobieranie input-a odpowiada skrypt [PlayerInput.cs](https://github.com/Mietek-01/Depther/blob/master/Highlighted%20Scripts/Player/PlayerInput.cs).
+- W folderze [InputData](https://github.com/Mietek-01/Depther/tree/master/Highlighted%20Scripts/Player/InputData) znajdują się klasy, które umożliwiają mi pobieranie inputa-a od gracza. Bardzo ważną rolę odgrywa klasa [InputData](https://github.com/Mietek-01/Depther/blob/master/Highlighted%20Scripts/Player/InputData/InputData.cs), która jest typem polimorficznym oraz klasą bazową dla klas pochodnych tj. [DoubleTapInput](https://github.com/Mietek-01/Depther/blob/master/Highlighted%20Scripts/Player/InputData/PlayerInput.DoubleTapInput.cs) czy [ButtonInput](https://github.com/Mietek-01/Depther/blob/master/Highlighted%20Scripts/Player/InputData/PlayerInput.ButtonInput.cs). Bardzo fajnie widoczna jest tu zasada "Open/Close" oraz "Liskov substitution".
+- Za wykonanie efektu "Dash move" odpowiada skrypt [PlayerDashMoveCreator.cs](https://github.com/Mietek-01/Depther/blob/master/Highlighted%20Scripts/Player/PlayerDashMoveCreator.cs).
+- Skrypt [Weapon.cs](https://github.com/Mietek-01/Depther/blob/master/Highlighted%20Scripts/Player/Weapon/Weapon.cs) pozwala nadać broni mocy sprawczej.
+
+### ObjectsPooler
+- Skrypt [ObjectsPooler.cs](https://github.com/Mietek-01/Depther/blob/master/Highlighted%20Scripts/ObjectsPooler/ObjectsPooler.cs) jest moją implementacja techniki "Objects Pooling", która pozwala na wtórne używanie obiektów. Stworzyłem ją w oparciu o wzorzec "Singleton", który gwarantuję występowanie tylko jednej instancji klasy oraz zapewnia do niej globalny dostęp.
+
+### DepthField
+- Jest to mechanizm, który znajduje się w folderze [DepthField](https://github.com/Mietek-01/Depther/tree/master/Highlighted%20Scripts/DepthField). Jego zadaniem jest "ściągnięcie" obiektu do określonej pozycji "Z", gdy ten tylko wejdzie w jego pole. Pole to składa się z zewnętrznego oraz wewnętrznego collidera w kształcie koła. Algorytm na podstawie odległości danego obiektu od środka tego pola ustawia odpowiednią pozycję "Z" obiektu.
+
+### Finding Tangent Algorithm
+- Jest to algorytm, który znajduję się w skrypcie [UsefulFunctions.cs](https://github.com/Mietek-01/Depther/blob/master/Highlighted%20Scripts/UsefulFunctions/UsefulFunctions.cs), a dokładniej w funkcji UsefulFunctions.FindTangentFor(...). Zadaniem tego algorytmu jest określenie stycznej do collidera, z którym obiekt złapał kolizje. Owy algorytm był mi potrzebny, by w odpowiedni sposób tworzyć efekty rosprysku, w momencie gdy pocisk uderza w platforme pod różnymi kątami. Dzięki zmiennej UsefulFunctions.TestMode można zobaczyć jak algorytm działa w czasie rzeczywistym.
+
+### Unit Tests
+- Moje testy jednostkowe znajdują się w folderze [Tests](https://github.com/Mietek-01/Depther/tree/master/Highlighted%20Scripts/Tests). Nie jest ich za wiele, gdyż nie miałem na to zbyt dużo czasu oraz ich naukę zacząłem gdy "Depther" był już praktycznie skończony, także struktura kodu nie pozwoliła mi na ich łatwą implementację. Jestem przekonany, że gdybym zaczą od początku tworzyc swoją grę z uwzględnieniem Unit Test-ów, to struktura kodu mogłaby wyglądać zupełnie inaczej.   
+
+## Widok projektu
 
 ![Browser Screenshot](https://github.com/Mietek-01/Depther/blob/master/Screens/Unity%20Project%20Screen.png)
 
+## Podsumowanie
 Na koniec chciałbym dodać, że jestem całkowitym samoukiem, który musiał zmierzyć się ze wszystkim sam oraz któremu to właśnie pasja pozwoliła stworzyć tak rozbudowaną grę samodzielnie.
 
