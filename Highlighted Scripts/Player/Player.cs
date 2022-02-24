@@ -346,117 +346,40 @@ public class Player : MonoBehaviour
         {
             case KindOfDeath.FALL:
                 {
-                    enabled = false;
+                    FallDeath();
 
-                    Invoke("DisableCameraFollow", .5f);
-
-                    Destroy(gameObject, 2f);
-
-                    GameplayManager.StartGameplayReset(4f);
-
-                    AudioManager.PlayPlayerVoices(deathClip);
-
-                    return true;
+                    break;
                 }
 
             case KindOfDeath.EXPLOSION:
                 {
-                    Destroy(Instantiate(explosionFX, aimingControler.transform.position
-                        , Quaternion.identity, transform.root), 5f);
-
-                    AudioManager.PlayPlayerVoices(deathClip);
+                    ExplosionDeath();
 
                     break;
                 }
 
             case KindOfDeath.DISSOLVE:
                 {
-                    anim.SetTrigger(hashOfDisolve);
+                    DissolveDeath();
 
-                    rb.velocity = new Vector2(0, rb.velocity.y);
-
-                    // Change materials in all my renderers for dissolve material
-                    transform.Find("Body").GetComponent<SpriteRenderer>()
-                        .material = dissolveMaterial;
-                    transform.Find("Body").transform.Find("Shield")
-                        .GetComponent<SpriteRenderer>().material = dissolveMaterial;
-                    transform.Find("Body").transform.Find("Head")
-                        .GetComponent<SpriteRenderer>().material = dissolveMaterial;
-                    transform.Find("Leg Left").GetComponent<SpriteRenderer>()
-                        .material = dissolveMaterial;
-                    transform.Find("Leg Right").GetComponent<SpriteRenderer>()
-                        .material = dissolveMaterial;
-
-                    Destroy(weapon.gameObject);
-                    Destroy(gameObject, 3f);
-
-                    GameplayManager.StartGameplayReset(5f);
-
-                    AudioManager.PlayPlayerVoices(deathClip);
-
-                    return true;
+                    break;
                 }
 
             case KindOfDeath.DIVISION:
                 {
-                    var dismemberedPlayer = Instantiate(dismemberedPlayerPrefab, transform.position
-                        , transform.rotation, GameplayManager._DynamicOfCurrentZone)
-                        .GetComponent<DismemberedPlayer>();
+                    DivisionDeath();
 
-                    Vector2 myVelocity = rb.velocity;
-
-                    Rigidbody2D[] partsOfBody = dismemberedPlayer.GetComponentsInChildren<Rigidbody2D>();
-
-                    // Assign dismemberd body the player velocity
-                    for (int i = 1; i < partsOfBody.Length; i++)
-                        partsOfBody[i].velocity = myVelocity * 1.05f;
-
-                    // It makes setting so much easier
-                    System.Func<Transform, Transform, bool> AplayFromTo = (from, to) =>
-                     {
-                         to.localPosition = from.localPosition;
-                         to.localEulerAngles = from.localEulerAngles;
-                         to.localScale = from.localScale;
-
-                         return true;
-                     };
-
-                    // Setting dismembered elements
-                    AplayFromTo(transform.Find("Body"), partsOfBody[0].transform);
-
-                    AplayFromTo(transform.Find("Body").transform.Find("Shield")
-                        , partsOfBody[1].transform);
-
-                    AplayFromTo(transform.Find("Body").transform.Find("Head")
-                        , partsOfBody[2].transform);
-
-                    AplayFromTo(transform.Find("Leg Left"), partsOfBody[3].transform);
-
-                    AplayFromTo(transform.Find("Leg Right"), partsOfBody[4].transform);
-
-                    Destroy(gameObject);
-
-                    GameplayManager.StartGameplayReset(4f + dismemberedPlayer.WhenStartDissolve);
-
-                    AudioManager.PlayPlayerVoices(deathClip);
-
-                    return true;
+                    break;
                 }
 
             case KindOfDeath.BOOM:
                 {
-                    Instantiate(boomFX, transform.position, Quaternion.identity
-                        , GameplayManager._DynamicOfCurrentZone);
-
-                    AudioManager.PlayPlayerVoices(boomDeathClip);
+                    BoomDeath();
 
                     break;
+
                 }
         }
-
-        Destroy(gameObject);
-
-        GameplayManager.StartGameplayReset(4f);
 
         return true;
     }
@@ -496,6 +419,117 @@ public class Player : MonoBehaviour
             Debug.LogError("I have no access to the input");
 
         InputData = playerInputData;
+    }
+
+    #endregion
+
+    #region Death Methods
+
+    private void BoomDeath()
+    {
+        Instantiate(boomFX, transform.position, Quaternion.identity
+            , GameplayManager._DynamicOfCurrentZone);
+
+        AudioManager.PlayPlayerVoices(boomDeathClip);
+
+        Destroy(gameObject);
+
+        GameplayManager.StartGameplayReset(4f);
+    }
+
+    private void DivisionDeath()
+    {
+        var dismemberedPlayer = Instantiate(dismemberedPlayerPrefab, transform.position
+            , transform.rotation, GameplayManager._DynamicOfCurrentZone)
+            .GetComponent<DismemberedPlayer>();
+
+        Vector2 myVelocity = rb.velocity;
+
+        Rigidbody2D[] partsOfBody = dismemberedPlayer.GetComponentsInChildren<Rigidbody2D>();
+
+        // Assign dismemberd body the player velocity
+        for (int i = 1; i < partsOfBody.Length; i++)
+            partsOfBody[i].velocity = myVelocity * 1.05f;
+
+        // It makes setting so much easier
+        System.Func<Transform, Transform, bool> AplayFromTo = (from, to) =>
+        {
+            to.localPosition = from.localPosition;
+            to.localEulerAngles = from.localEulerAngles;
+            to.localScale = from.localScale;
+
+            return true;
+        };
+
+        // Setting dismembered elements
+        AplayFromTo(transform.Find("Body"), partsOfBody[0].transform);
+
+        AplayFromTo(transform.Find("Body").transform.Find("Shield")
+            , partsOfBody[1].transform);
+
+        AplayFromTo(transform.Find("Body").transform.Find("Head")
+            , partsOfBody[2].transform);
+
+        AplayFromTo(transform.Find("Leg Left"), partsOfBody[3].transform);
+
+        AplayFromTo(transform.Find("Leg Right"), partsOfBody[4].transform);
+
+        Destroy(gameObject);
+
+        GameplayManager.StartGameplayReset(4f + dismemberedPlayer.WhenStartDissolve);
+
+        AudioManager.PlayPlayerVoices(deathClip);
+    }
+
+    private void DissolveDeath()
+    {
+        anim.SetTrigger(hashOfDisolve);
+
+        rb.velocity = new Vector2(0, rb.velocity.y);
+
+        // Change materials in all my renderers for dissolve material
+        transform.Find("Body").GetComponent<SpriteRenderer>()
+            .material = dissolveMaterial;
+        transform.Find("Body").transform.Find("Shield")
+            .GetComponent<SpriteRenderer>().material = dissolveMaterial;
+        transform.Find("Body").transform.Find("Head")
+            .GetComponent<SpriteRenderer>().material = dissolveMaterial;
+        transform.Find("Leg Left").GetComponent<SpriteRenderer>()
+            .material = dissolveMaterial;
+        transform.Find("Leg Right").GetComponent<SpriteRenderer>()
+            .material = dissolveMaterial;
+
+        Destroy(weapon.gameObject);
+        Destroy(gameObject, 3f);
+
+        GameplayManager.StartGameplayReset(5f);
+
+        AudioManager.PlayPlayerVoices(deathClip);
+    }
+
+    private void FallDeath()
+    {
+        enabled = false;
+
+        Invoke("DisableCameraFollow", .5f);
+
+        Destroy(gameObject, 2f);
+
+        GameplayManager.StartGameplayReset(4f);
+
+        AudioManager.PlayPlayerVoices(deathClip);
+    }
+
+    private void ExplosionDeath()
+    {
+        Destroy(Instantiate(explosionFX, aimingControler.transform.position
+            , Quaternion.identity, transform.root), 5f);
+
+        AudioManager.PlayPlayerVoices(deathClip);
+
+        Destroy(gameObject);
+
+        GameplayManager.StartGameplayReset(4f);
     }
 
     #endregion
