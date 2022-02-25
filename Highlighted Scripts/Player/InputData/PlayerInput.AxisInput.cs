@@ -7,7 +7,7 @@ public partial class PlayerInput
     {
         public AxisInput(string key, string forAction) : base(key, forAction) { }
 
-        protected override void Reset()
+        public override void Reset()
         {
             Result = 0f;
         }

@@ -2,7 +2,7 @@ using Cinemachine;
 using UnityEngine;
 
 [RequireComponent(typeof(Player))]
-[DefaultExecutionOrder(-5)]// Before the Player script
+[DefaultExecutionOrder(-5)]// Before the Player.cs
 public class PlayerDashMoveCreator : MonoBehaviour
 {
     [SerializeField] float duration = .12f;
@@ -34,12 +34,14 @@ public class PlayerDashMoveCreator : MonoBehaviour
     Vector3 echoPosition;
     Vector2 velocity = Vector2.zero;
 
+    IPlayerInputManagement inputManagement;
     Player player;
     Rigidbody2D rb;
 
     // Start is called before the first frame update
     void Awake()
     {
+        inputManagement = GetComponent<IPlayerInputManagement>();
         player = GetComponent<Player>();
         rb = GetComponent<Rigidbody2D>();
 
@@ -71,23 +73,17 @@ public class PlayerDashMoveCreator : MonoBehaviour
         // Position of first echo FX
         echoPosition = transform.position;
 
-        // Setting dash move duration
         timeOfDashMove = duration;
 
-        // Disable eyes
         DisableEyes();
 
-        // Disable dash move input
         EnableDashMoveInput(false);
 
-        // Play sound
-        AudioManager.PlayPlayerSFX(dashMoveClip);
-
-        // Impulse
         myShaking.GenerateImpulse();
 
-        // Dash move FX
         CreateDashMoveFX();
+
+        AudioManager.PlayPlayerSFX(dashMoveClip);
     }
 
     public void DisableEyes()
@@ -229,11 +225,11 @@ public class PlayerDashMoveCreator : MonoBehaviour
         if (player.Frozen)
             return;
 
-        player.InputManagement.EnableInputFor("LeftDashMove", value);
-        player.InputManagement.EnableInputFor("RightDashMove", value);
+        inputManagement.EnableInputFor("LeftDashMove", value);
+        inputManagement.EnableInputFor("RightDashMove", value);
 
         if (!withoutUpperDashMove)
-            player.InputManagement.EnableInputFor("UpperDashMove", value);
+            inputManagement.EnableInputFor("UpperDashMove", value);
     }
 
     void SetAfterDashingToFalse()

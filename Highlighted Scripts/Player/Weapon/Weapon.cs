@@ -21,10 +21,11 @@ public class Weapon : MonoBehaviour
     readonly int hashOfStrongBulletLoading = Animator.StringToHash("StrongBulletLoading");
     readonly int hashOfHit = Animator.StringToHash("Hit");
 
+    IPlayerInputData playerInputData;
+
     WeaponCollider weaponCollider;
     ReversalSetter aimingControler;
     Animator anim;
-    Player player;
 
     GameObject myStrongBullet;
 
@@ -50,7 +51,7 @@ public class Weapon : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        player = GetComponentInParent<Player>();
+        playerInputData = GetComponentInParent<IPlayerInputData>();
         weaponCollider = GetComponentInChildren<WeaponCollider>();
         anim = GetComponent<Animator>();
         aimingControler = GetComponentInParent<ReversalSetter>();
@@ -66,7 +67,7 @@ public class Weapon : MonoBehaviour
         if (strongShotEnlargement)
         {
             // Check shot initiate
-            if (!shotInitiate && !weaponCollider.BlockedShooting && player.InputData.Shot)
+            if (!shotInitiate && !weaponCollider.BlockedShooting && playerInputData.Shot)
                 shotInitiate = true;
 
             // In this mode the shot is released when the mouse button is released insted of cliking
@@ -75,7 +76,7 @@ public class Weapon : MonoBehaviour
                 Shot(clikingTime < whenCreateStrongBullet);
         }
         else
-            if (player.InputData.Shot)
+            if (playerInputData.Shot)
             Shot(true);
     }
 
@@ -135,7 +136,7 @@ public class Weapon : MonoBehaviour
             return;
         }
 
-        player.MakeRecoil(recoilForce * (ratio + .1f));
+        GetComponentInParent<Player>().MakeRecoil(recoilForce * (ratio + .1f));
 
         anim.SetBool(hashOfStrongBulletLoading, false);
 
@@ -179,7 +180,7 @@ public class Weapon : MonoBehaviour
 
     bool ReleaseCheck()
     {
-        if (player.InputData.ReleasedShot)
+        if (playerInputData.ReleasedShot)
             return true;
         else
         {
@@ -252,7 +253,7 @@ public class Weapon : MonoBehaviour
 
         CinemachineImpulseManager.Instance.Clear();
 
-        player.Kill(Player.KindOfDeath.EXPLOSION);
+        GetComponentInParent<Player>().Kill(Player.KindOfDeath.EXPLOSION);
     }
 
     void SetCanHitToTrue()

@@ -29,7 +29,7 @@ public interface IPlayerInputManagement
     bool Enabled { get; set; }
 }
 
-[DefaultExecutionOrder(-10)]// Before the Player script and the PlayerDashMoveCreator script
+[DefaultExecutionOrder(-10)]// Before the Player.cs and the PlayerDashMoveCreator.cs
 public partial class PlayerInput : MonoBehaviour, IPlayerInputData, IPlayerInputManagement
 {
     [SerializeField] ButtonInput jump = new ButtonInput(KeyCode.W, "Jump");
@@ -61,7 +61,18 @@ public partial class PlayerInput : MonoBehaviour, IPlayerInputData, IPlayerInput
 
     public float HorizontalMovement => horizontalMovement.Result;
 
-    public bool Enabled { get => enabled; set => enabled = value; }
+    public bool Enabled
+    {
+        get => enabled;
+        set
+        {
+            enabled = value;
+
+            if (value == false)
+                foreach (var input in myInputs)
+                    input.Reset();
+        }
+    }
 
     InputData[] myInputs;
 
@@ -89,11 +100,11 @@ public partial class PlayerInput : MonoBehaviour, IPlayerInputData, IPlayerInput
 
     public void EnableInputFor(string actionInputName, bool value)
     {
-        var result = Array.Find(myInputs, obj => obj.ForAction == actionInputName);
+        var result = Array.Find(myInputs, input => input.ForAction == actionInputName);
 
         if (result != null)
             result.Enabled = value;
         else
-            Debug.LogError($"I dont have action called {actionInputName}");
+            Debug.LogError($"I dont have an input action named {actionInputName}");
     }
 }

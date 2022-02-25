@@ -26,7 +26,7 @@ public partial class PlayerInput
             }
         }
 
-        protected abstract void Reset();
+        public abstract void Reset();
 
         public abstract void Update();
     }

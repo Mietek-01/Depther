@@ -10,8 +10,6 @@ public class Player : MonoBehaviour
     [SerializeField] float jumpForce = 1500f;
     [SerializeField] float basicFrictionValue = 0.008f;
     [SerializeField] LayerMask whatIsPlatform;
-
-    [SerializeField] CircleCollider2D playerCollider;
     [SerializeField] Collider2D groundCheck;
 
     public bool RightFacing { get; private set; } = true;
@@ -58,10 +56,6 @@ public class Player : MonoBehaviour
 
     public bool IamDead { get; private set; }
 
-    public IPlayerInputData InputData { get; private set; }
-
-    public IPlayerInputManagement InputManagement { get; private set; }
-
     public enum KindOfDeath
     {
         DISSOLVE,
@@ -76,8 +70,12 @@ public class Player : MonoBehaviour
     readonly int hashOfIsCrouching = Animator.StringToHash("isCrouching");
     readonly int hashOfDisolve = Animator.StringToHash("disolve");
 
+    IPlayerInputData inputData;
+    IPlayerInputManagement inputManagement;
+
     Animator anim;
     Rigidbody2D rb;
+    CircleCollider2D playerCollider;
 
     Weapon weapon;
     ReversalSetter aimingControler;
@@ -138,19 +136,20 @@ public class Player : MonoBehaviour
     {
         AssignPlayerInputDataInterface(GetComponent<IPlayerInputData>());
 
-        InputManagement = GetComponent<IPlayerInputManagement>();
+        inputManagement = GetComponent<IPlayerInputManagement>();
         dashMoveCreator = GetComponent<PlayerDashMoveCreator>();
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        playerCollider = GetComponent<CircleCollider2D>();
         aimingControler = GetComponentInChildren<ReversalSetter>();
-        weapon = FindObjectOfType<Weapon>();
+        weapon = GetComponentInChildren<Weapon>();
     }
 
     void SetData()
     {
         Immortality = CheatsSetter.CheckCheatActivity("Immortality");
 
-        GetComponent<CircleCollider2D>().sharedMaterial.friction = basicFrictionValue;
+        playerCollider.sharedMaterial.friction = basicFrictionValue;
 
         try
         {
@@ -161,8 +160,8 @@ public class Player : MonoBehaviour
         }
         catch (System.NullReferenceException e)
         {
-            Debug.LogWarning("Probably the player is created during the Unit Test so " +
-                " the GameplayManager and GlobalCursor dont exist");
+            Debug.LogWarning("Probably the player is created during the Unit Test, " +
+                "so GameplayManager and GlobalCursor dont exist");
         }
     }
 
@@ -172,7 +171,7 @@ public class Player : MonoBehaviour
 
     void StandCheck()
     {
-        if (InputData.StandUp)
+        if (inputData.StandUp)
         {
             playerCollider.sharedMaterial.friction = basicFrictionValue;
             anim.SetBool(hashOfIsCrouching, false);
@@ -184,9 +183,9 @@ public class Player : MonoBehaviour
 
     void CrouchCheck()
     {
-        if (IsGrounded && InputData.Crouch)
+        if (IsGrounded && inputData.Crouch)
         {
-            // The friction adequate if after dash move
+            // The friction is less if the player is after dash move
             playerCollider.sharedMaterial.friction = dashMoveCreator.AfterDashing ? .02f : .1f;
 
             anim.SetBool(hashOfIsCrouching, true);
@@ -209,18 +208,19 @@ public class Player : MonoBehaviour
         // I have landed
         if (!WasGrounded && IsGrounded)
         {
-            AudioManager.PlayPlayerVoices(dropClip);
             anim.SetBool(hashOfIsJumping, false);
 
-            // Enable UP dash move
+            // Enable Upper dash move
             if (!Frozen)
-                InputManagement.EnableInputFor("UpperDashMove", true);
+                inputManagement.EnableInputFor("UpperDashMove", true);
+
+            AudioManager.PlayPlayerVoices(dropClip);
         }
     }
 
     void JumpCheck()
     {
-        if (IsGrounded && InputData.Jump)
+        if (IsGrounded && inputData.Jump)
         {
             Jump = true;
             anim.SetBool(hashOfIsJumping, true);
@@ -234,29 +234,29 @@ public class Player : MonoBehaviour
 
     void WallSlidingCheck()
     {
-        wallSliding = !IsGrounded && InputData.HorizontalMovement != 0f
+        wallSliding = !IsGrounded && inputData.HorizontalMovement != 0f
             && frontCheck.IsTouchingLayers(whatIsPlatform) && !wallJumping;
     }
 
     void WallJumpingCheck()
     {
-        if (wallSliding && InputData.Jump)
+        if (wallSliding && inputData.Jump)
         {
-            AudioManager.PlayPlayerVoices(jumpsClip[Random.Range(0, jumpsClip.Length)]);
-
             wallJumping = true;
 
             Invoke("SetWallJumpingToFalse", wallJumpingTime);
+
+            AudioManager.PlayPlayerVoices(jumpsClip[Random.Range(0, jumpsClip.Length)]);
         }
     }
 
     void DashMoveCheck()
     {
-        if (InputData.LeftDoubleTap)
+        if (inputData.LeftDoubleTap)
             dashMoveCreator.Activate(PlayerDashMoveCreator.Type.LEFT);
-        else if (InputData.RightDoubleTap)
+        else if (inputData.RightDoubleTap)
             dashMoveCreator.Activate(PlayerDashMoveCreator.Type.RIGHT);
-        else if (InputData.UpperDoubleTap)
+        else if (inputData.UpperDoubleTap)
             dashMoveCreator.Activate(PlayerDashMoveCreator.Type.UPPER);
     }
 
@@ -283,12 +283,12 @@ public class Player : MonoBehaviour
 
     void HorizontalMovement()
     {
-        velocity.x = InputData.HorizontalMovement * speed * Time.fixedDeltaTime;
+        velocity.x = inputData.HorizontalMovement * speed * Time.fixedDeltaTime;
         velocity.y = rb.velocity.y;
 
         rb.velocity = velocity;
 
-        anim.SetBool(hashOfIsRunning, InputData.HorizontalMovement != 0f);
+        anim.SetBool(hashOfIsRunning, inputData.HorizontalMovement != 0f);
     }
 
     void AirMovement()
@@ -309,7 +309,7 @@ public class Player : MonoBehaviour
 
         if (wallJumping)
         {
-            velocity.x = xWallForce * -InputData.HorizontalMovement * Time.fixedDeltaTime;
+            velocity.x = xWallForce * -inputData.HorizontalMovement * Time.fixedDeltaTime;
             velocity.y = yWallForce;
             rb.velocity = velocity;
         }
@@ -318,6 +318,14 @@ public class Player : MonoBehaviour
     #endregion
 
     #region Public Methods
+
+    public void AssignPlayerInputDataInterface(IPlayerInputData playerInputData)
+    {
+        if (playerInputData == null)
+            Debug.LogError("I have no access to the input");
+        else
+            inputData = playerInputData;
+    }
 
     public bool Kill(KindOfDeath kind)
     {
@@ -328,22 +336,18 @@ public class Player : MonoBehaviour
         IamDead = true;
         enabled = false;
 
-        // Disable a gameplay timer
         GameplayManager.EnableGameplayTimer(false);
 
-        // Disable the cursor
         GlobalCursor.Visible = false;
 
-        // Disable eyes
+        inputManagement.Enabled = false;
+
         dashMoveCreator.DisableEyes();
 
-        // Disable input
-        InputManagement.Enabled = false;
-
-        // Deactivate potentially active the strong bullet
+        // Destroy potentially strong bullet
         weapon.DestroyStrongBullet();
 
-        // Execute sent kind of death
+        // Perform the sent kind of death
         switch (kind)
         {
             case KindOfDeath.FALL:
@@ -389,8 +393,7 @@ public class Player : MonoBehaviour
     public void MakeRecoil(Vector2 force)
     {
         if (RightFacing)
-            rb.AddForceAtPosition(new Vector2(-force.x, force.y)
-                , aimingControler.transform.position);
+            rb.AddForceAtPosition(new Vector2(-force.x, force.y), aimingControler.transform.position);
         else
             rb.AddForceAtPosition(force, aimingControler.transform.position);
     }
@@ -399,14 +402,7 @@ public class Player : MonoBehaviour
     {
         Frozen = value;
 
-        InputManagement.EnableInputFor("Crouch", !value);
-        InputManagement.EnableInputFor("Jump", !value);
-        InputManagement.EnableInputFor("Shot", !value);
-        InputManagement.EnableInputFor("HorizontalMovement", !value);
-
-        InputManagement.EnableInputFor("LeftDashMove", !value);
-        InputManagement.EnableInputFor("RightDashMove", !value);
-        InputManagement.EnableInputFor("UpperDashMove", !value);
+        inputManagement.Enabled = !value;
 
         rb.velocity = Vector2.zero;
 
@@ -415,28 +411,19 @@ public class Player : MonoBehaviour
             rb.simulated = !value;
     }
 
-    public void AssignPlayerInputDataInterface(IPlayerInputData playerInputData)
-    {
-        if (playerInputData == null)
-            Debug.LogError("I have no access to the input");
-
-        InputData = playerInputData;
-    }
-
     #endregion
 
     #region Death Methods
 
     private void BoomDeath()
     {
-        Instantiate(boomFX, transform.position, Quaternion.identity
-            , GameplayManager._DynamicOfCurrentZone);
+        Instantiate(boomFX, transform.position, Quaternion.identity, GameplayManager._DynamicOfCurrentZone);
+
+        GameplayManager.StartGameplayReset(4f);
 
         AudioManager.PlayPlayerVoices(boomDeathClip);
 
         Destroy(gameObject);
-
-        GameplayManager.StartGameplayReset(4f);
     }
 
     private void DivisionDeath()
@@ -445,15 +432,14 @@ public class Player : MonoBehaviour
             , transform.rotation, GameplayManager._DynamicOfCurrentZone)
             .GetComponent<DismemberedPlayer>();
 
+        var bodyParts = dismemberedPlayer.GetComponentsInChildren<Rigidbody2D>();
         Vector2 myVelocity = rb.velocity;
 
-        Rigidbody2D[] partsOfBody = dismemberedPlayer.GetComponentsInChildren<Rigidbody2D>();
-
         // Assign dismemberd body the player velocity
-        for (int i = 1; i < partsOfBody.Length; i++)
-            partsOfBody[i].velocity = myVelocity * 1.05f;
+        for (int i = 1; i < bodyParts.Length; i++)
+            bodyParts[i].velocity = myVelocity * 1.05f;
 
-        // It makes setting so much easier
+        // Makes setting easier
         System.Func<Transform, Transform, bool> AplayFromTo = (from, to) =>
         {
             to.localPosition = from.localPosition;
@@ -463,24 +449,22 @@ public class Player : MonoBehaviour
             return true;
         };
 
-        // Setting dismembered elements
-        AplayFromTo(transform.Find("Body"), partsOfBody[0].transform);
+        // Set dismembered elements
+        AplayFromTo(transform.Find("Body"), bodyParts[0].transform);
 
-        AplayFromTo(transform.Find("Body").transform.Find("Shield")
-            , partsOfBody[1].transform);
+        AplayFromTo(transform.Find("Body").transform.Find("Shield"), bodyParts[1].transform);
 
-        AplayFromTo(transform.Find("Body").transform.Find("Head")
-            , partsOfBody[2].transform);
+        AplayFromTo(transform.Find("Body").transform.Find("Head"), bodyParts[2].transform);
 
-        AplayFromTo(transform.Find("Leg Left"), partsOfBody[3].transform);
+        AplayFromTo(transform.Find("Leg Left"), bodyParts[3].transform);
 
-        AplayFromTo(transform.Find("Leg Right"), partsOfBody[4].transform);
-
-        Destroy(gameObject);
+        AplayFromTo(transform.Find("Leg Right"), bodyParts[4].transform);
 
         GameplayManager.StartGameplayReset(4f + dismemberedPlayer.WhenStartDissolve);
 
         AudioManager.PlayPlayerVoices(deathClip);
+
+        Destroy(gameObject);
     }
 
     private void DissolveDeath()
@@ -489,24 +473,19 @@ public class Player : MonoBehaviour
 
         rb.velocity = new Vector2(0, rb.velocity.y);
 
-        // Change materials in all my renderers for dissolve material
-        transform.Find("Body").GetComponent<SpriteRenderer>()
-            .material = dissolveMaterial;
-        transform.Find("Body").transform.Find("Shield")
-            .GetComponent<SpriteRenderer>().material = dissolveMaterial;
-        transform.Find("Body").transform.Find("Head")
-            .GetComponent<SpriteRenderer>().material = dissolveMaterial;
-        transform.Find("Leg Left").GetComponent<SpriteRenderer>()
-            .material = dissolveMaterial;
-        transform.Find("Leg Right").GetComponent<SpriteRenderer>()
-            .material = dissolveMaterial;
-
-        Destroy(weapon.gameObject);
-        Destroy(gameObject, 3f);
+        // Change materials on dissolve material
+        transform.Find("Body").GetComponent<SpriteRenderer>().material = dissolveMaterial;
+        transform.Find("Body").transform.Find("Shield").GetComponent<SpriteRenderer>().material = dissolveMaterial;
+        transform.Find("Body").transform.Find("Head").GetComponent<SpriteRenderer>().material = dissolveMaterial;
+        transform.Find("Leg Left").GetComponent<SpriteRenderer>().material = dissolveMaterial;
+        transform.Find("Leg Right").GetComponent<SpriteRenderer>().material = dissolveMaterial;
 
         GameplayManager.StartGameplayReset(5f);
 
         AudioManager.PlayPlayerVoices(deathClip);
+
+        Destroy(weapon.gameObject);
+        Destroy(gameObject, 3f);
     }
 
     private void FallDeath()
@@ -515,23 +494,23 @@ public class Player : MonoBehaviour
 
         Invoke("DisableCameraFollow", .5f);
 
-        Destroy(gameObject, 2f);
-
         GameplayManager.StartGameplayReset(4f);
 
         AudioManager.PlayPlayerVoices(deathClip);
+
+        Destroy(gameObject, 2f);
     }
 
     private void ExplosionDeath()
     {
-        Destroy(Instantiate(explosionFX, aimingControler.transform.position
-            , Quaternion.identity, transform.root), 5f);
+        Destroy(Instantiate(explosionFX, transform.position, Quaternion.identity
+        , GameplayManager._DynamicOfCurrentZone), 5f);
+
+        GameplayManager.StartGameplayReset(4f);
 
         AudioManager.PlayPlayerVoices(deathClip);
 
         Destroy(gameObject);
-
-        GameplayManager.StartGameplayReset(4f);
     }
 
     #endregion

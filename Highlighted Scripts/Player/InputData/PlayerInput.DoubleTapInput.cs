@@ -13,7 +13,7 @@ public partial class PlayerInput
 
         public DoubleTapInput(KeyCode key, string forAction) : base(key, forAction) { }
 
-        protected override void Reset()
+        public override void Reset()
         {
             whenLastTap = 0f;
             Result = false;

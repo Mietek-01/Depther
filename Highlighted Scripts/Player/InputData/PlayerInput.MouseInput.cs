@@ -9,7 +9,7 @@ public partial class PlayerInput
 
         public MouseInput(int key, string forAction) : base(key, forAction) { }
 
-        protected override void Reset()
+        public override void Reset()
         {
             Result = false;
         }

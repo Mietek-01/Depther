@@ -12,7 +12,7 @@ public partial class PlayerInput
 
         public ButtonInput(KeyCode key, string forAction) : base(key, forAction) { }
 
-        protected override void Reset()
+        public override void Reset()
         {
             Result = false;
         }
