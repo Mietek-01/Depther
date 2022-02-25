@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 
-[DefaultExecutionOrder(0)]// After the PlayerInput script and the PlayerDashMoveCreator script
+[RequireComponent(typeof(PlayerInput))]
+[RequireComponent(typeof(PlayerDashMoveCreator))]
+[DefaultExecutionOrder(0)]// After the PlayerInput.cs and the PlayerDashMoveCreator.cs
 public class Player : MonoBehaviour
 {
     [Header("Movement")]
