@@ -29,7 +29,6 @@ public interface IPlayerInputManagement
     bool Enabled { get; set; }
 }
 
-[RequireComponent(typeof(Player))]
 [DefaultExecutionOrder(-10)]// Before the Player script and the PlayerDashMoveCreator script
 public partial class PlayerInput : MonoBehaviour, IPlayerInputData, IPlayerInputManagement
 {
