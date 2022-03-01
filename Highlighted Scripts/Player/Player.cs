@@ -353,35 +353,30 @@ public class Player : MonoBehaviour
             case KindOfDeath.FALL:
                 {
                     FallDeath();
-
                     break;
                 }
 
             case KindOfDeath.EXPLOSION:
                 {
                     ExplosionDeath();
-
                     break;
                 }
 
             case KindOfDeath.DISSOLVE:
                 {
                     DissolveDeath();
-
                     break;
                 }
 
             case KindOfDeath.DIVISION:
                 {
                     DivisionDeath();
-
                     break;
                 }
 
             case KindOfDeath.BOOM:
                 {
                     BoomDeath();
-
                     break;
 
                 }
