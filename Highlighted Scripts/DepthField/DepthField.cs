@@ -32,10 +32,6 @@ public partial class DepthField : MonoBehaviour
             Debug.LogError("The depth field must have a different position Z than the waypoint");
     }
 
-    /// <summary>
-    /// Zapisuje obiekt ktory wszedl w moje pole
-    /// </summary>
-    /// <param name="obj"></param>
     public void AddObject(GameObject obj)
     {
         // Caly sens algorytmu polega na tym by nie tworzyc dwoch tych samych depthFieldObject. 
@@ -46,7 +42,8 @@ public partial class DepthField : MonoBehaviour
 
         if (result == null)
         {
-            //Debug.Log($"The {obj} enters to the first depth field");
+            // Debug.Log($"The {obj} enters to the first depth field");
+            
             var depthFieldObject = new DepthFieldObject(obj);
 
             RegisteredDepthFieldObjects.Add(depthFieldObject);
@@ -55,15 +52,12 @@ public partial class DepthField : MonoBehaviour
         else
         {
             //Debug.Log($"The {obj} enters to the next depth field");
+            
             result.NumberOfMyFields++;
             ObjectsInMyField.Add(result);
         }
     }
 
-    /// <summary>
-    /// Usuwam obiekt z mojego pola
-    /// </summary>
-    /// <param name="obj"></param>
     public void RemoveObject(GameObject obj)
     {
         var objectInDepthField = ObjectsInMyField.Find(objInDepthField => objInDepthField.Object == obj);
@@ -82,8 +76,8 @@ public partial class DepthField : MonoBehaviour
                 objectInDepthField.SetZPosition(this, WaypointOfPositionZ);
 
             RegisteredDepthFieldObjects.Remove(objectInDepthField);
-        }
-        //else Debug.Log($"The {obj} exits from the the depth field");
+            
+        } //else Debug.Log($"The {obj} exits from the the depth field");
 
     }
 
