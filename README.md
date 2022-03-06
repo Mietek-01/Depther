@@ -40,7 +40,8 @@ W celu łatwiejszej eksploracji świata gry na końcu sekcji "About" w Start Men
 
 ## Odnośniki
 - Razem z kolegą stworzyliśmy amatorski trailer mojej gry i znajduje się na youtube [o tutaj](https://youtu.be/bA7vMUqEdhA).
-- Jeśli chcesz zagrać możesz pobrać folder Depther.zip z sekcji [Releases](https://github.com/Mietek-01/Depther/releases). Gra jest zrobiona na silniku, więc nie masz się czego obawiać 😉
+- Jeśli chcesz zagrać możesz wejśc w [ten link](https://mietek01.itch.io/depther), który prowadzić do strony itch.io, specjalnej platformy do umieszczania gier. By zagrać wpisz hasło: Mietek. Z powodu, iż jest to gra odpalana na przeglądarce, FPS mogą być niższe niż w wersji na PC. 
+- Możesz również pobrać folder Depther.zip z sekcji [Releases](https://github.com/Mietek-01/Depther/releases). Gra jest zrobiona na silniku, więc nie masz się czego obawiać 😉
 - W [VSCodeCounter](https://github.com/Mietek-01/Depther/blob/master/.VSCodeCounter/2022-02-21_19-20-11/results.md) znajduje się spis wszystkich skryptów gry.
 
 ## Opis projektu
