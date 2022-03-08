@@ -89,7 +89,22 @@ public partial class Player : Character
     {
         base.SetData();
 
-        GameplayManager.Player = this;
+        Immortality = CheatsSetter.CheckCheatActivity("Immortality");
+
+        try
+        {
+            GameplayManager.Player = this;
+
+            GameplayManager.CinemachineCamera.Follow = transform;
+
+            GlobalCursor.SetCursorType(GlobalCursor.CursorType.GAMEPLAY);
+
+        }
+        catch (System.NullReferenceException e)
+        {
+            Debug.LogWarning("Probably the player is created during the Unit Test, " +
+                "so GameplayManager and GlobalCursor dont exist");
+        }
     }
 
     protected override void AirMovement()

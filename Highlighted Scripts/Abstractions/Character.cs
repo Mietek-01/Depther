@@ -1,12 +1,13 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Collider2D))]
 [RequireComponent(typeof(PlayerInput))]
 public abstract class Character : Damageable
 {
     [Header("Character")]
     [SerializeField] protected float speed = 700f;
     [SerializeField] protected float jumpForce = 1500f;
-    [SerializeField] protected float basicFrictionValue = 0.008f;
+    [SerializeField] protected float basicFriction = 0.008f;
 
     [SerializeField] protected LayerMask whatIsPlatform;
     [SerializeField] protected Collider2D groundCheck;
@@ -106,10 +107,9 @@ public abstract class Character : Damageable
     {
         if (inputData.StandUp)
         {
-            myCollider.sharedMaterial.friction = basicFrictionValue;
+            myCollider.sharedMaterial.friction = basicFriction;
             anim.SetBool(hashOfIsCrouching, false);
 
-            // Time for animation
             Invoke("SetCrouchingToFalse", .3f);
         }
     }
@@ -191,22 +191,7 @@ public abstract class Character : Damageable
 
     protected virtual void SetData()
     {
-        Immortality = CheatsSetter.CheckCheatActivity("Immortality");
-
-        myCollider.sharedMaterial.friction = basicFrictionValue;
-
-        try
-        {
-            GameplayManager.CinemachineCamera.Follow = transform;
-
-            GlobalCursor.SetCursorType(GlobalCursor.CursorType.GAMEPLAY);
-
-        }
-        catch (System.NullReferenceException e)
-        {
-            Debug.LogWarning("Probably the player is created during the Unit Test, " +
-                "so GameplayManager and GlobalCursor dont exist");
-        }
+        myCollider.sharedMaterial.friction = basicFriction;
     }
 
     protected void Flip()
