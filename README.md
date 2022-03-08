@@ -1,16 +1,15 @@
 # Depther
 ![Browser Screenshot](https://github.com/Mietek-01/Depther/blob/master/Screens/Start%20Menu.png)
 
-Jest to moja autorska gra, którą zacząłem tworzyć w lutym 2021 roku z wykorzystaniem silnika Unity. 
-Gra jest stworzona na Windows-a, a moim głównym celem podczas jej robienia było nabycie umiejętności z zakresu tworzenia gier. 
+Jest to moja autorska gra, którą zacząłem tworzyć w lutym 2021 roku z wykorzystaniem silnika Unity, a moim głównym celem było nabycie umiejętności z zakresu tworzenia gier. 
 
-Z gamedev – u najbardziej pasjonuje mnie programowanie, zatem głównie skupiłem się na mechanice gry, niż na jej oprawie wizualnej.
+Jestem pasjonatem programowania, zatem głównie skupiłem się na mechanice gry, niż na jej oprawie wizualnej. Bardzo zależało mi na różnorodności oraz złożoności gry, by była wyjątkowa i cechowała się bogatą mechaniką.  
 
 Niestety grafikę oraz audio musiałem pobrać z innych projektów, jednak były to projekty publiczne przeznaczone do nauki. Grafikę jedynie musiałem trochę przerobić, by pasowała do klimatu gry. 
 
 ## Opis gry
 Depther jest platformówką, ale nie byle jaką. W początkowej fazie tworzenia gry bardzo spodobał mi się efekt głębi,
-który można osiągnąć w bardzo prosty sposób poprzez manipulacje pozycją „Z” obiektów.
+który można osiągnąć w bardzo prosty sposób poprzez manipulację pozycją „Z” obiektów.
 
 Zdecydowałem, że stworze grę 2D, ale taką która w dynamiczny sposób wykorzystuje trzeci wymiar, co okazało się nie lada wyzwaniem. 
 
@@ -39,20 +38,24 @@ Dodatkowo gra zawiera samouczek oraz sprawny system checkpoint-ów dzięki, któ
 W celu łatwiejszej eksploracji świata gry na końcu sekcji "About" w Start Menu umieściłem spis cheat-ów dzięki, którym gracz np. nie będzie mógł przyjmować obrażeń.
 
 ## Odnośniki
-- Razem z kolegą stworzyliśmy amatorski trailer mojej gry i znajduje się na youtube [o tutaj](https://youtu.be/bA7vMUqEdhA).
-- Jeśli chcesz zagrać możesz wejśc w [ten link](https://mietek01.itch.io/depther), który prowadzić do strony itch.io, specjalnej platformy do umieszczania gier. By zagrać wpisz hasło: Mietek. Z powodu, iż jest to gra odpalana na przeglądarce, FPS mogą być niższe niż w wersji na PC. 
+- Razem z kolegą stworzyliśmy amatorski trailer i znajduje się na youtube [o tutaj](https://youtu.be/bA7vMUqEdhA).
+- Jeśli chcesz zagrać możesz wejśc w [ten link](https://mietek01.itch.io/depther), który prowadzić do strony itch.io, specjalnej platformy do umieszczania gier. By zagrać wpisz hasło: Depther714. Z powodu, iż gra będzie uruchamiana na przeglądarce, FPS mogą być niższe niż w wersji na PC. 
 - Możesz również pobrać folder Depther.zip z sekcji [Releases](https://github.com/Mietek-01/Depther/releases). Gra jest zrobiona na silniku, więc nie masz się czego obawiać 😉
-- W [VSCodeCounter](https://github.com/Mietek-01/Depther/blob/master/.VSCodeCounter/2022-02-21_19-20-11/results.md) znajduje się spis wszystkich skryptów gry.
+- W [VSCodeCounter](https://github.com/Mietek-01/Depther/blob/master/.VSCodeCounter/2022-03-08_13-50-04/results.md) znajduje się spis wszystkich skryptów gry.
 
 ## Opis projektu
-Projekt gry zawiera ponad 90 skryptów (11 000 linijek kodu), które własnoręcznie napisałem. Przez cały proces tworzenia "Depthera" dużą wagę przywiązywałem do refactoringu, gdyż jako programiście bardzo zależało mi na jakości jak również czystości kodu. 
+Projekt gry zawiera ponad 90 skryptów (11 000 linijek kodu), które własnoręcznie napisałem. Przez cały proces tworzenia "Depthera" dużą wagę przywiązywałem do refactoringu, gdyż jako programiście bardzo zależy mi na jakości, jak również czystości kodu. 
 
 Większość mechanizmów, które w grze się znajdują musiałem wielokrotnie przebudowywać, gdyż mój kod nie nadążał za wzrostem mojej wiedzy jak i doświadczenia. Zdaję sobie sprawę, że i teraz wiele rzeczy napisał bym inaczej zwłaszcza, że o wzorcach projektowych, zasadach SOLID, Unit Test-ach oraz wzorcu DI zaczołem uczyć się, gdy moja gra była już praktycznie skończona.
 
 Poniżej zamieszczam spis najciekawszych elementów gry, które w moim mniemaniu są najbardziej warte pokazania. Wszystkie przedstawiane skrypty znajdują się w folderze [Highlighted Scripts](https://github.com/Mietek-01/Depther/tree/master/Highlighted%20Scripts).
 
+### Abstrakcje
+- W folderze [Abstractions](https://github.com/Mietek-01/Depther/tree/master/Highlighted%20Scripts/Abstractions) znajdują się moje klasy abstrakcyjne. Dzięki nim kod działa w większym stopniu ogólności, co przekłada się na jego uniwersalność jak również rozszerzalność. 
+- Szczególnie istotna jest klasa [Damageable](https://github.com/Mietek-01/Depther/blob/master/Highlighted%20Scripts/Abstractions/Damageable.cs), dzięki której instancje klas pochodnych stają się zniszczalne i mogą przyjmować obrażenia. Co więcej, dzięki zastosowaniu wzorca "Observer", w momencie gdy taki obiekt zostanie zniszczony, wszyscy subskrybenci zostaną o tym poinformowani, co pozwala obiektom śledzącym zareagować adekwatnie do zaistniałego zdarzenia.
+
 ### Mechanizm Player-a
-- Najważniejsza część znajduje się w skrypcie [Player.cs](https://github.com/Mietek-01/Depther/blob/master/Highlighted%20Scripts/Player/Player.cs). W nim zastosowałem wzorzec DI, poprzez użycie interfejsu IPlayerInputData. Wtedy właśnie doceniłem rolę i siłę tego wzorca oraz pozwoliło mi to na napisanie kilku testów jednostkowych.
+- Główna część znajduję się w klasie [Player](https://github.com/Mietek-01/Depther/blob/master/Highlighted%20Scripts/Player/Player.cs), która dziedziczy z klasy [Character](https://github.com/Mietek-01/Depther/blob/master/Highlighted%20Scripts/Abstractions/Character.cs). W niej zastosowałem wzorzec DI, poprzez użycie interfejsu IPlayerInputData.
 - Za pobieranie input-a odpowiada skrypt [PlayerInput.cs](https://github.com/Mietek-01/Depther/blob/master/Highlighted%20Scripts/Player/PlayerInput.cs).
 - W folderze [InputData](https://github.com/Mietek-01/Depther/tree/master/Highlighted%20Scripts/Player/InputData) znajdują się klasy, które umożliwiają mi pobieranie inputa-a od gracza. Bardzo ważną rolę odgrywa klasa [InputData](https://github.com/Mietek-01/Depther/blob/master/Highlighted%20Scripts/Player/InputData/InputData.cs), która jest typem polimorficznym oraz klasą bazową dla klas pochodnych tj. [DoubleTapInput](https://github.com/Mietek-01/Depther/blob/master/Highlighted%20Scripts/Player/InputData/PlayerInput.DoubleTapInput.cs) czy [ButtonInput](https://github.com/Mietek-01/Depther/blob/master/Highlighted%20Scripts/Player/InputData/PlayerInput.ButtonInput.cs). Bardzo fajnie widoczna jest tu zasada "Open/Close" oraz "Liskov substitution".
 - Za wykonanie efektu "Dash move" odpowiada skrypt [PlayerDashMoveCreator.cs](https://github.com/Mietek-01/Depther/blob/master/Highlighted%20Scripts/Player/PlayerDashMoveCreator.cs).
@@ -76,4 +79,3 @@ Poniżej zamieszczam spis najciekawszych elementów gry, które w moim mniemaniu
 
 ## Podsumowanie
 Na koniec chciałbym dodać, że jestem całkowitym samoukiem, który musiał zmierzyć się ze wszystkim sam oraz któremu to właśnie pasja pozwoliła stworzyć tak rozbudowaną grę samodzielnie.
-
