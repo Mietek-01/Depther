@@ -1,94 +1,31 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(PlayerInput))]
 [RequireComponent(typeof(PlayerDashMoveCreator))]
-[DefaultExecutionOrder(0)]// After the PlayerInput.cs and the PlayerDashMoveCreator.cs
-public class Player : MonoBehaviour
+[DefaultExecutionOrder(0)]// After the PlayerInput.cs
+public partial class Player : Character
 {
-    [Header("Movement")]
-    [SerializeField] float speed = 15f;
-    [SerializeField] float jumpForce = 1500f;
-    [SerializeField] float basicFrictionValue = 0.008f;
-    [SerializeField] LayerMask whatIsPlatform;
-    [SerializeField] Collider2D groundCheck;
-
-    public bool RightFacing { get; private set; } = true;
-
-    public bool IsGrounded { get; private set; }
-
-    public bool Frozen { get; private set; }
-
-    public bool WasGrounded { get; private set; }
-
-    public bool IsCrouching { get; private set; }
-
-    public bool Jump { get; private set; }
-
-    public Vector2 Velocity => velocity;
-
-    Vector2 velocity = Vector2.zero;
-    Vector3 mousePosition;
-
-    [Header("Wall Sliding")]
-    [SerializeField] float wallSlidingSpeed = 2f;
-    [SerializeField] float xWallForce = 15f;
-    [SerializeField] float yWallForce = 30f;
-    [SerializeField] float wallJumpingTime = 0.05f;
+    [Header("Player")]
+    [SerializeField] WallMovementSO wallMovementSO;
     [SerializeField] Collider2D frontCheck;
-
-    bool wallSliding = false;
-    bool wallJumping = false;
 
     [Header("FX")]
     [SerializeField] GameObject dismemberedPlayerPrefab;
     [SerializeField] GameObject boomFX;
     [SerializeField] GameObject explosionFX;
 
-    [SerializeField] Material dissolveMaterial;
+    [SerializeField] Material dissolutionMaterial;
 
     [Header("Audio")]
-    [SerializeField] AudioClip[] jumpsClip;
     [SerializeField] AudioClip deathClip;
     [SerializeField] AudioClip boomDeathClip;
-    [SerializeField] AudioClip dropClip;
 
-    public bool Immortality { get; set; }
-
-    public bool IamDead { get; private set; }
-
-    public enum KindOfDeath
-    {
-        DISSOLVE,
-        BOOM,
-        DIVISION,
-        EXPLOSION,
-        FALL
-    }
-
-    readonly int hashOfIsJumping = Animator.StringToHash("isJumping");
-    readonly int hashOfIsRunning = Animator.StringToHash("isRunning");
-    readonly int hashOfIsCrouching = Animator.StringToHash("isCrouching");
-    readonly int hashOfDisolve = Animator.StringToHash("disolve");
-
-    IPlayerInputData inputData;
-    IPlayerInputManagement inputManagement;
-
-    Animator anim;
-    Rigidbody2D rb;
-    CircleCollider2D playerCollider;
+    readonly int hashOfDissolution = Animator.StringToHash("disolve");
 
     Weapon weapon;
     ReversalSetter aimingControler;
     PlayerDashMoveCreator dashMoveCreator;
 
-    void Awake()
-    {
-        SetReferences();
-
-        SetData();
-    }
-
-    void Update()
+    protected override void Update()
     {
         if (IsCrouching)
             StandCheck();
@@ -120,73 +57,69 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
+    protected override void SetSubscribers()
     {
-        if (IsCrouching)
-            return;
+        OnProtect += (whoIsAttacking) =>
+        {
+            var myKiller = whoIsAttacking.GetComponent<IPlayerKiller>();
 
-        HorizontalMovement();
+            if (myKiller == null)
+                return true;
 
-        AirMovement();
+            if ((Immortality && myKiller.PlayerDeath != KindOfDeath.FALL) || IamDead || dashMoveCreator.enabled
+                || WinLoseController.IsWin || WinLoseController.IsLose)
+                return true;
+
+            return false;
+        };
+
+        OnDie += (whoIsAttacking) => { Die(whoIsAttacking.GetComponent<IPlayerKiller>().PlayerDeath); };
     }
 
-    #region Awake Methods
-
-    void SetReferences()
+    protected override void SetReferences()
     {
-        AssignPlayerInputDataInterface(GetComponent<IPlayerInputData>());
+        base.SetReferences();
 
-        inputManagement = GetComponent<IPlayerInputManagement>();
         dashMoveCreator = GetComponent<PlayerDashMoveCreator>();
-        rb = GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>();
-        playerCollider = GetComponent<CircleCollider2D>();
         aimingControler = GetComponentInChildren<ReversalSetter>();
         weapon = GetComponentInChildren<Weapon>();
     }
 
-    void SetData()
+    protected override void SetData()
     {
-        Immortality = CheatsSetter.CheckCheatActivity("Immortality");
+        base.SetData();
 
-        playerCollider.sharedMaterial.friction = basicFrictionValue;
-
-        try
-        {
-            GameplayManager.CinemachineCamera.Follow = transform;
-
-            GlobalCursor.SetCursorSprite(GlobalCursor.KindOfCursor.GAMEPLAY);
-
-        }
-        catch (System.NullReferenceException e)
-        {
-            Debug.LogWarning("Probably the player is created during the Unit Test, " +
-                "so GameplayManager and GlobalCursor dont exist");
-        }
+        GameplayManager.Player = this;
     }
 
-    #endregion
+    protected override void AirMovement()
+    {
+        base.AirMovement();
+
+        if (wallMovementSO.WallSliding)
+        {
+            velocity.x = rb.velocity.x;
+            velocity.y = Mathf.Clamp(rb.velocity.y, -wallMovementSO.wallSlidingSpeed, 100f);
+
+            rb.velocity = velocity;
+        }
+
+        if (wallMovementSO.WallJumping)
+        {
+            velocity.x = wallMovementSO.xWallForce * -inputData.HorizontalMovement * Time.fixedDeltaTime;
+            velocity.y = wallMovementSO.yWallForce;
+            rb.velocity = velocity;
+        }
+    }
 
     #region Checks
 
-    void StandCheck()
-    {
-        if (inputData.StandUp)
-        {
-            playerCollider.sharedMaterial.friction = basicFrictionValue;
-            anim.SetBool(hashOfIsCrouching, false);
-
-            // Time for animation
-            Invoke("SetCrouchingToFalse", .3f);
-        }
-    }
-
-    void CrouchCheck()
+    protected override void CrouchCheck()
     {
         if (IsGrounded && inputData.Crouch)
         {
             // The friction is less if the player is after dash move
-            playerCollider.sharedMaterial.friction = dashMoveCreator.AfterDashing ? .02f : .1f;
+            myCollider.sharedMaterial.friction = dashMoveCreator.AfterDashing ? .02f : .1f;
 
             anim.SetBool(hashOfIsCrouching, true);
             weapon.DestroyStrongBullet();
@@ -196,55 +129,19 @@ public class Player : MonoBehaviour
         }
     }
 
-    void GroundedStateUpdate()
-    {
-        WasGrounded = IsGrounded;
-
-        IsGrounded = groundCheck.IsTouchingLayers(whatIsPlatform);
-    }
-
-    void LandCheck()
-    {
-        // I have landed
-        if (!WasGrounded && IsGrounded)
-        {
-            anim.SetBool(hashOfIsJumping, false);
-
-            // Enable Upper dash move
-            if (!Frozen)
-                inputManagement.EnableInputFor("UpperDashMove", true);
-
-            AudioManager.PlayPlayerVoices(dropClip);
-        }
-    }
-
-    void JumpCheck()
-    {
-        if (IsGrounded && inputData.Jump)
-        {
-            Jump = true;
-            anim.SetBool(hashOfIsJumping, true);
-            AudioManager.PlayPlayerVoices(jumpsClip[Random.Range(0, jumpsClip.Length)]);
-        }
-        else
-        // The fall is like a jump
-        if (WasGrounded && !IsGrounded)
-            anim.SetBool(hashOfIsJumping, true);
-    }
-
     void WallSlidingCheck()
     {
-        wallSliding = !IsGrounded && inputData.HorizontalMovement != 0f
-            && frontCheck.IsTouchingLayers(whatIsPlatform) && !wallJumping;
+        wallMovementSO.WallSliding = !IsGrounded && inputData.HorizontalMovement != 0f
+            && frontCheck.IsTouchingLayers(whatIsPlatform) && !wallMovementSO.WallJumping;
     }
 
     void WallJumpingCheck()
     {
-        if (wallSliding && inputData.Jump)
+        if (wallMovementSO.WallSliding && inputData.Jump)
         {
-            wallJumping = true;
+            wallMovementSO.WallJumping = true;
 
-            Invoke("SetWallJumpingToFalse", wallJumpingTime);
+            Invoke("SetWallJumpingToFalse", wallMovementSO.wallJumpingTime);
 
             AudioManager.PlayPlayerVoices(jumpsClip[Random.Range(0, jumpsClip.Length)]);
         }
@@ -267,143 +164,12 @@ public class Player : MonoBehaviour
 
     void UpdateAiming()
     {
-        mousePosition = GlobalCursor.Position;
-
-        if (mousePosition.x > transform.position.x && !RightFacing)
+        if (GlobalCursor.Position.x > transform.position.x && !RightFacing)
             Flip();
-        else if (mousePosition.x < transform.position.x && RightFacing)
+        else if (GlobalCursor.Position.x < transform.position.x && RightFacing)
             Flip();
 
-        aimingControler.SetReversal(mousePosition);
-    }
-
-    #endregion
-
-    #region Physical Methods
-
-    void HorizontalMovement()
-    {
-        velocity.x = inputData.HorizontalMovement * speed * Time.fixedDeltaTime;
-        velocity.y = rb.velocity.y;
-
-        rb.velocity = velocity;
-
-        anim.SetBool(hashOfIsRunning, inputData.HorizontalMovement != 0f);
-    }
-
-    void AirMovement()
-    {
-        if (Jump)
-        {
-            rb.AddForce(new Vector2(0, jumpForce));
-            Jump = false;
-        }
-
-        if (wallSliding)
-        {
-            velocity.x = rb.velocity.x;
-            velocity.y = Mathf.Clamp(rb.velocity.y, -wallSlidingSpeed, 100f);
-
-            rb.velocity = velocity;
-        }
-
-        if (wallJumping)
-        {
-            velocity.x = xWallForce * -inputData.HorizontalMovement * Time.fixedDeltaTime;
-            velocity.y = yWallForce;
-            rb.velocity = velocity;
-        }
-    }
-
-    #endregion
-
-    #region Public Methods
-
-    public void AssignPlayerInputDataInterface(IPlayerInputData playerInputData)
-    {
-        if (playerInputData == null)
-            Debug.LogError("I have no access to the input");
-        else
-            inputData = playerInputData;
-    }
-
-    public bool Kill(KindOfDeath kind)
-    {
-        if ((Immortality && kind != KindOfDeath.FALL) || IamDead || dashMoveCreator.enabled
-            || WinLoseController.IsWin || WinLoseController.IsLose)
-            return false;
-
-        IamDead = true;
-        enabled = false;
-
-        GameplayManager.EnableGameplayTimer(false);
-
-        GlobalCursor.Visible = false;
-
-        inputManagement.Enabled = false;
-
-        dashMoveCreator.DisableEyes();
-
-        // Destroy potentially strong bullet
-        weapon.DestroyStrongBullet();
-
-        // Perform the sent kind of death
-        switch (kind)
-        {
-            case KindOfDeath.FALL:
-                {
-                    FallDeath();
-                    break;
-                }
-
-            case KindOfDeath.EXPLOSION:
-                {
-                    ExplosionDeath();
-                    break;
-                }
-
-            case KindOfDeath.DISSOLVE:
-                {
-                    DissolveDeath();
-                    break;
-                }
-
-            case KindOfDeath.DIVISION:
-                {
-                    DivisionDeath();
-                    break;
-                }
-
-            case KindOfDeath.BOOM:
-                {
-                    BoomDeath();
-                    break;
-
-                }
-        }
-
-        return true;
-    }
-
-    public void MakeRecoil(Vector2 force)
-    {
-        if (RightFacing)
-            rb.AddForceAtPosition(new Vector2(-force.x, force.y), aimingControler.transform.position);
-        else
-            rb.AddForceAtPosition(force, aimingControler.transform.position);
-    }
-
-    public void FreezeInput(bool value, bool withRigidBody)
-    {
-        Frozen = value;
-
-        inputManagement.Enabled = !value;
-
-        rb.velocity = Vector2.zero;
-
-        // I may want to freeze the player with physics as wall ( e.g. during the ZS Field)
-        if (withRigidBody)
-            rb.simulated = !value;
+        aimingControler.SetReversal(GlobalCursor.Position);
     }
 
     #endregion
@@ -430,12 +196,11 @@ public class Player : MonoBehaviour
         var bodyParts = dismemberedPlayer.GetComponentsInChildren<Rigidbody2D>();
         Vector2 myVelocity = rb.velocity;
 
-        // Assign dismemberd body the player velocity
         for (int i = 1; i < bodyParts.Length; i++)
             bodyParts[i].velocity = myVelocity * 1.05f;
 
-        // Makes setting easier
-        System.Func<Transform, Transform, bool> AplayFromTo = (from, to) =>
+        // Make setting easier
+        System.Func<Transform, Transform, bool> ApplayFromTo = (from, to) =>
         {
             to.localPosition = from.localPosition;
             to.localEulerAngles = from.localEulerAngles;
@@ -445,15 +210,15 @@ public class Player : MonoBehaviour
         };
 
         // Set dismembered elements
-        AplayFromTo(transform.Find("Body"), bodyParts[0].transform);
+        ApplayFromTo(transform.Find("Body"), bodyParts[0].transform);
 
-        AplayFromTo(transform.Find("Body").transform.Find("Shield"), bodyParts[1].transform);
+        ApplayFromTo(transform.Find("Body").transform.Find("Shield"), bodyParts[1].transform);
 
-        AplayFromTo(transform.Find("Body").transform.Find("Head"), bodyParts[2].transform);
+        ApplayFromTo(transform.Find("Body").transform.Find("Head"), bodyParts[2].transform);
 
-        AplayFromTo(transform.Find("Leg Left"), bodyParts[3].transform);
+        ApplayFromTo(transform.Find("Leg Left"), bodyParts[3].transform);
 
-        AplayFromTo(transform.Find("Leg Right"), bodyParts[4].transform);
+        ApplayFromTo(transform.Find("Leg Right"), bodyParts[4].transform);
 
         GameplayManager.StartGameplayReset(4f + dismemberedPlayer.WhenStartDissolve);
 
@@ -462,18 +227,18 @@ public class Player : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void DissolveDeath()
+    private void DissolutionDeath()
     {
-        anim.SetTrigger(hashOfDisolve);
+        anim.SetTrigger(hashOfDissolution);
 
         rb.velocity = new Vector2(0, rb.velocity.y);
 
-        // Change materials on dissolve material
-        transform.Find("Body").GetComponent<SpriteRenderer>().material = dissolveMaterial;
-        transform.Find("Body").transform.Find("Shield").GetComponent<SpriteRenderer>().material = dissolveMaterial;
-        transform.Find("Body").transform.Find("Head").GetComponent<SpriteRenderer>().material = dissolveMaterial;
-        transform.Find("Leg Left").GetComponent<SpriteRenderer>().material = dissolveMaterial;
-        transform.Find("Leg Right").GetComponent<SpriteRenderer>().material = dissolveMaterial;
+        // Change materials on dissolution material
+        transform.Find("Body").GetComponent<SpriteRenderer>().material = dissolutionMaterial;
+        transform.Find("Body").transform.Find("Shield").GetComponent<SpriteRenderer>().material = dissolutionMaterial;
+        transform.Find("Body").transform.Find("Head").GetComponent<SpriteRenderer>().material = dissolutionMaterial;
+        transform.Find("Leg Left").GetComponent<SpriteRenderer>().material = dissolutionMaterial;
+        transform.Find("Leg Right").GetComponent<SpriteRenderer>().material = dissolutionMaterial;
 
         GameplayManager.StartGameplayReset(5f);
 
@@ -512,26 +277,74 @@ public class Player : MonoBehaviour
 
     #region Others
 
-    void Flip()
+    private void Die(KindOfDeath kindOfDeath)
     {
-        transform.Rotate(0, -180f, 0);
-        RightFacing = !RightFacing;
+        IamDead = true;
+        enabled = false;
+
+        GameplayManager.Player = null;
+        GameplayManager.EnableGameplayTimer(false);
+
+        GlobalCursor.Visible = false;
+
+        inputManagement.Enabled = false;
+
+        dashMoveCreator.DisableEyes();
+
+        // Destroy potentially strong bullet
+        weapon.DestroyStrongBullet();
+
+        switch (kindOfDeath)
+        {
+            case KindOfDeath.FALL:
+                {
+                    FallDeath();
+                    break;
+                }
+
+            case KindOfDeath.EXPLOSION:
+                {
+                    ExplosionDeath();
+                    break;
+                }
+
+            case KindOfDeath.DISSOLUTION:
+                {
+                    DissolutionDeath();
+                    break;
+                }
+
+            case KindOfDeath.DIVISION:
+                {
+                    DivisionDeath();
+                    break;
+                }
+
+            case KindOfDeath.BOOM:
+                {
+                    BoomDeath();
+                    break;
+                }
+        }
     }
 
     void SetWallJumpingToFalse()
     {
-        wallJumping = false;
-    }
-
-    void SetCrouchingToFalse()
-    {
-        if (!anim.GetBool(hashOfIsCrouching))
-            IsCrouching = false;
+        wallMovementSO.WallJumping = false;
     }
 
     void DisableCameraFollow()
     {
         GameplayManager.CinemachineCamera.Follow = null;
+    }
+
+    /// <summary>
+    /// I need this method for Editor scripts and Unit Tests
+    /// </summary>
+    /// <param name="kindOfDeath"></param>
+    public void SuddenDeath(KindOfDeath kindOfDeath)
+    {
+        Die(kindOfDeath);
     }
 
     #endregion

@@ -1,34 +1,6 @@
 using System;
 using UnityEngine;
 
-public interface IPlayerInputData
-{
-    bool Jump { get; }
-
-    bool Shot { get; }
-
-    bool ReleasedShot { get; }
-
-    bool Crouch { get; }
-
-    bool StandUp { get; }
-
-    bool LeftDoubleTap { get; }
-
-    bool RightDoubleTap { get; }
-
-    bool UpperDoubleTap { get; }
-
-    float HorizontalMovement { get; }
-}
-
-public interface IPlayerInputManagement
-{
-    void EnableInputFor(string actionInputName, bool value);
-
-    bool Enabled { get; set; }
-}
-
 [DefaultExecutionOrder(-10)]// Before the Player.cs and the PlayerDashMoveCreator.cs
 public partial class PlayerInput : MonoBehaviour, IPlayerInputData, IPlayerInputManagement
 {
@@ -78,16 +50,7 @@ public partial class PlayerInput : MonoBehaviour, IPlayerInputData, IPlayerInput
 
     private void Awake()
     {
-        myInputs = new InputData[7];
-
-        // Refs to the inputs
-        myInputs[0] = jump;
-        myInputs[1] = crouch;
-        myInputs[2] = shot;
-        myInputs[3] = horizontalMovement;
-        myInputs[4] = leftDoubleTap;
-        myInputs[5] = rightDoubleTap;
-        myInputs[6] = upperDoubleTap;
+        myInputs = new InputData[] { jump, crouch, shot, horizontalMovement, leftDoubleTap, rightDoubleTap, upperDoubleTap };
     }
 
     // Update is called once per frame

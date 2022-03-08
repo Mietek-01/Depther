@@ -29,7 +29,7 @@ public class player_tests
 
         yield return new WaitForSeconds(.2f);
 
-        player.Kill(Player.KindOfDeath.BOOM);
+        player.SuddenDeath(Player.KindOfDeath.BOOM);
 
         yield return new WaitForSeconds(.2f);
 

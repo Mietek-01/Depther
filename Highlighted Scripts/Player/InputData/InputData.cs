@@ -9,11 +9,6 @@ public partial class PlayerInput
         // Allows to assign Input to an action e.g. a jump 
         public string ForAction { get; private set; }
 
-        public InputData(string forAction)
-        {
-            ForAction = forAction;
-        }
-
         public bool Enabled
         {
             get => enabled;
@@ -26,12 +21,16 @@ public partial class PlayerInput
             }
         }
 
+        public InputData(string forAction)
+        {
+            ForAction = forAction;
+        }
+
         public abstract void Reset();
 
         public abstract void Update();
     }
 
-    // I must inherit to use polymorphism
     public abstract class InputData<T, T1> : InputData
     {
         // Determines key for selected type of input

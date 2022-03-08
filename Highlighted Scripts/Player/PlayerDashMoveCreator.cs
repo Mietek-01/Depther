@@ -2,7 +2,7 @@ using Cinemachine;
 using UnityEngine;
 
 [RequireComponent(typeof(Player))]
-[DefaultExecutionOrder(-5)]// Before the Player.cs
+[DefaultExecutionOrder(0)] // After the PlyaerInput.cs
 public class PlayerDashMoveCreator : MonoBehaviour
 {
     [SerializeField] float duration = .12f;
@@ -19,7 +19,7 @@ public class PlayerDashMoveCreator : MonoBehaviour
 
     [SerializeField] AudioClip dashMoveClip;
 
-    public bool AfterDashing { get; private set; } = false;
+    public bool AfterDashing { get; private set; }
 
     public enum Type
     {

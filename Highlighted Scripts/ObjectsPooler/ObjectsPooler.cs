@@ -3,39 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [DefaultExecutionOrder(-200)]
-public class ObjectsPooler : MonoBehaviour
+public partial class ObjectsPooler : Singleton<ObjectsPooler>
 {
-    // It is intended to generate objects for later use.
-    // Thanks to the tag I can easily navigate throught the pools
-    [System.Serializable]
-    public class Pool
-    {
-        public GameObject prefab;
-        public int size;
-
-        public string Tag => prefab.name;
-    }
-
-    static ObjectsPooler instance;
-
     [SerializeField] Pool[] pools;
-    [SerializeField] ParticleSystem[] particleSystemsPool;
+
+    [Tooltip("One pool contains one ParticleSystem")]
+    [SerializeField] ParticleSystem[] particleSystemPools;
 
     Dictionary<string, Queue<GameObject>> poolsDictionary = new Dictionary<string, Queue<GameObject>>();
 
-    Dictionary<string, ParticleSystem> particleSystemsPoolDictionary = new Dictionary<string, ParticleSystem>();
+    Dictionary<string, ParticleSystem> particleSystemPoolsDictionary = new Dictionary<string, ParticleSystem>();
 
     // Start is called before the first frame update
-    void Awake()
+    protected override void Awake()
     {
-        if (instance)
-        {
-            Debug.LogError("You are trying to create another: " + name);
-            Destroy(gameObject);
-            return;
-        }
-        else
-            instance = this;
+        base.Awake();
 
         SetPools();
 
@@ -55,9 +37,12 @@ public class ObjectsPooler : MonoBehaviour
                 obj.transform.SetParent(instance.transform);
         }
 
-        foreach (var ps in instance.particleSystemsPool)
-            ps.transform.SetParent(instance.transform);
+        foreach (var pool in instance.particleSystemPools)
+        {
+            var particleSystem = instance.particleSystemPoolsDictionary[pool.name];
 
+            particleSystem.transform.SetParent(instance.transform);
+        }
     }
 
     public static GameObject SpawnObjectfFromThePool(string tag, Vector3 position, Quaternion rotation
@@ -93,14 +78,14 @@ public class ObjectsPooler : MonoBehaviour
     public static ParticleSystem PlayParticleSystem(string tag, Vector3 position, Quaternion rotation
         , Transform parent)
     {
-        if (!instance.particleSystemsPoolDictionary.ContainsKey(tag))
+        if (!instance.particleSystemPoolsDictionary.ContainsKey(tag))
         {
             Debug.LogError("Pool with tag " + tag + " doesnt excist");
             return null;
         }
 
         // Get my particle system in selected pool
-        var particleSystem = instance.particleSystemsPoolDictionary[tag];
+        var particleSystem = instance.particleSystemPoolsDictionary[tag];
 
         // Setting particleSystem
         particleSystem.transform.SetParent(parent);
@@ -144,7 +129,7 @@ public class ObjectsPooler : MonoBehaviour
 
     void SetParticleSystemPools()
     {
-        foreach (var ps in particleSystemsPool)
+        foreach (var ps in particleSystemPools)
         {
             var particleSystem = Instantiate(ps.gameObject, transform).GetComponent<ParticleSystem>();
 
@@ -155,7 +140,7 @@ public class ObjectsPooler : MonoBehaviour
 
             particleSystem.gameObject.SetActive(false);
 
-            particleSystemsPoolDictionary.Add(ps.name, particleSystem);
+            particleSystemPoolsDictionary.Add(ps.name, particleSystem);
         }
     }
 

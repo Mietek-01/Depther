@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Cinemachine;
 
-public class Weapon : MonoBehaviour
+public class Weapon : MonoBehaviour, IPlayerKiller
 {
     [SerializeField] bool strongShotEnlargement = false;
     [SerializeField] int weaponDamage = 2;
@@ -16,6 +16,8 @@ public class Weapon : MonoBehaviour
     [Header("Audio")]
     [SerializeField] AudioClip basicShotClip;
     [SerializeField] AudioClip enemyHitClip;
+
+    public Player.KindOfDeath PlayerDeath => Player.KindOfDeath.EXPLOSION;
 
     readonly int hashOfBasicShot = Animator.StringToHash("BasicShot");
     readonly int hashOfStrongBulletLoading = Animator.StringToHash("StrongBulletLoading");
@@ -42,7 +44,7 @@ public class Weapon : MonoBehaviour
     const float shootingFreaquency = .01f;
     const float hitFreaquency = .4f;
 
-    float clikingTime = 0f;
+    float clickTime = 0f;
 
     // This is a really important variable because it determines wrong shooting area,meaning 
     // the field in which chroshair is in front of the attack point instead of being behind it
@@ -72,8 +74,8 @@ public class Weapon : MonoBehaviour
 
             // In this mode the shot is released when the mouse button is released insted of cliking
             if (shotInitiate && ReleaseCheck())
-                // The length of clicking determine kind of bullet 
-                Shot(clikingTime < whenCreateStrongBullet);
+                // The length of the click determine kind of bullet 
+                Shot(clickTime < whenCreateStrongBullet);
         }
         else
             if (playerInputData.Shot)
@@ -136,7 +138,7 @@ public class Weapon : MonoBehaviour
             return;
         }
 
-        GetComponentInParent<Player>().MakeRecoil(recoilForce * (ratio + .1f));
+        MakeRecoil(GetComponentInParent<Player>(), recoilForce * (ratio + .1f));
 
         anim.SetBool(hashOfStrongBulletLoading, false);
 
@@ -160,7 +162,7 @@ public class Weapon : MonoBehaviour
 
         anim.SetTrigger(hashOfHit);
 
-        enemy.TakeDamage(weaponDamage);
+        enemy.TakeDamage(this.gameObject, weaponDamage);
 
         // Still alive
         if (enemy.Health > 0)
@@ -178,15 +180,42 @@ public class Weapon : MonoBehaviour
         Invoke("SetCanShootToTrue", .5f);
     }
 
+    public void DestroyStrongBullet()
+    {
+        if (!myStrongBullet)
+            return;
+
+        CinemachineImpulseManager.Instance.Clear();
+
+        Destroy(myStrongBullet);
+
+        MyReset();
+
+        anim.SetBool(hashOfStrongBulletLoading, false);
+    }
+
+    // Call by the end of StrongBulletLoading animation
+    public void Boom()
+    {
+        if (!anim.GetBool(hashOfStrongBulletLoading))
+            return;
+
+        Destroy(myStrongBullet);
+
+        CinemachineImpulseManager.Instance.Clear();
+
+        GetComponentInParent<Player>().TakeDamage(this.gameObject);
+    }
+
     bool ReleaseCheck()
     {
         if (playerInputData.ReleasedShot)
             return true;
         else
         {
-            clikingTime += Time.deltaTime;
+            clickTime += Time.deltaTime;
 
-            if (clikingTime > whenCreateStrongBullet)
+            if (clickTime > whenCreateStrongBullet)
             {
                 if (weaponCollider.BlockedShooting)
                     DestroyStrongBullet();
@@ -207,25 +236,11 @@ public class Weapon : MonoBehaviour
         }
     }
 
-    public void DestroyStrongBullet()
-    {
-        if (!myStrongBullet)
-            return;
-
-        CinemachineImpulseManager.Instance.Clear();
-
-        Destroy(myStrongBullet);
-
-        MyReset();
-
-        anim.SetBool(hashOfStrongBulletLoading, false);
-    }
-
     void MyReset()
     {
         Invoke("SetCanShootToTrue", shootingFreaquency);
 
-        clikingTime = 0f;
+        clickTime = 0f;
 
         IAmShooting = false;
         canShoot = false;
@@ -243,17 +258,12 @@ public class Weapon : MonoBehaviour
             <= radiusOfIncorrectShootingArea * radiusOfIncorrectShootingArea);
     }
 
-    // Call by the end of StrongBulletLoading animation
-    public void Boom()
+    void MakeRecoil(Player player, Vector2 force)
     {
-        if (!anim.GetBool(hashOfStrongBulletLoading))
-            return;
-
-        Destroy(myStrongBullet);
-
-        CinemachineImpulseManager.Instance.Clear();
-
-        GetComponentInParent<Player>().Kill(Player.KindOfDeath.EXPLOSION);
+        if (player.RightFacing)
+            player.GetComponent<Rigidbody2D>().AddForceAtPosition(new Vector2(-force.x, force.y), aimingControler.transform.position);
+        else
+            player.GetComponent<Rigidbody2D>().AddForceAtPosition(force, aimingControler.transform.position);
     }
 
     void SetCanHitToTrue()

@@ -11,13 +11,13 @@ public class WeaponCollider : MonoBehaviour
     private void Awake()
     {
         myCollider = GetComponent<Collider2D>();
-        
+
         BlockedShooting = false;
         whatIsPlatform = LayerMask.GetMask("Platform");
 
-        // Using onEnter OnExit doesnt work
     }
 
+    // Using OnEnter OnExit doesnt work
     private void Update()
     {
         BlockedShooting = myCollider.IsTouchingLayers(whatIsPlatform);
