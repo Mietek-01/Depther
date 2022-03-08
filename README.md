@@ -52,7 +52,7 @@ Poniżej zamieszczam spis najciekawszych elementów gry, które w moim mniemaniu
 
 ### Abstrakcje
 - W folderze [Abstractions](https://github.com/Mietek-01/Depther/tree/master/Highlighted%20Scripts/Abstractions) znajdują się moje klasy abstrakcyjne. Dzięki nim kod działa w większym stopniu ogólności, co przekłada się na jego uniwersalność jak również rozszerzalność. 
-- Szczególnie istotna jest klasa [Damageable](https://github.com/Mietek-01/Depther/blob/master/Highlighted%20Scripts/Abstractions/Damageable.cs), dzięki której instancje klas pochodnych stają się zniszczalne i mogą przyjmować obrażenia. Co więcej, dzięki zastosowaniu wzorca "Observer", w momencie gdy taki obiekt zostanie zniszczony, wszyscy subskrybenci zostaną o tym poinformowani, co pozwala obiektom śledzącym zareagować adekwatnie do zaistniałego zdarzenia.
+- Szczególnie istotna jest klasa [Damageable](https://github.com/Mietek-01/Depther/blob/master/Highlighted%20Scripts/Abstractions/Damageable.cs), dzięki której instancje klas pochodnych mogą przyjmować obrażenia. Co więcej, dzięki zastosowaniu wzorca "Observer", w momencie gdy taki obiekt zostanie zniszczony, wszyscy subskrybenci zostaną o tym poinformowani, co pozwala obiektom śledzącym zareagować adekwatnie do zaistniałego zdarzenia.
 
 ### Mechanizm Player-a
 - Główna część znajduję się w klasie [Player](https://github.com/Mietek-01/Depther/blob/master/Highlighted%20Scripts/Player/Player.cs), która dziedziczy z klasy [Character](https://github.com/Mietek-01/Depther/blob/master/Highlighted%20Scripts/Abstractions/Character.cs). W niej zastosowałem wzorzec DI, poprzez użycie interfejsu IPlayerInputData.
