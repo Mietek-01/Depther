@@ -3,7 +3,7 @@
 
 Jest to moja autorska gra, którą zacząłem tworzyć w lutym 2021 roku z wykorzystaniem silnika Unity, a moim głównym celem było nabycie umiejętności z zakresu tworzenia gier. 
 
-Jestem pasjonatem programowania, zatem głównie skupiłem się na mechanice gry, niż na jej oprawie wizualnej. Bardzo zależało mi na różnorodności oraz złożoności gry, by była wyjątkowa i cechowała się bogatą mechaniką.  
+Jestem pasjonatem programowania, zatem głównie skupiłem się na mechanice gry, niż na jej oprawie wizualnej. Bardzo zależało mi na różnorodności oraz złożoności gry, tak by była wyjątkowa i cechowała się bogatą mechaniką.  
 
 Niestety grafikę oraz audio musiałem pobrać z innych projektów, jednak były to projekty publiczne przeznaczone do nauki. Grafikę jedynie musiałem trochę przerobić, by pasowała do klimatu gry. 
 
