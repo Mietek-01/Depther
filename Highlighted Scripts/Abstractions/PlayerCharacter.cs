@@ -2,7 +2,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
 [RequireComponent(typeof(PlayerInput))]
-public abstract class Character : Damageable
+public abstract class PlayerCharacter : Damageable
 {
     [Header("Character")]
     [SerializeField] protected float speed = 700f;

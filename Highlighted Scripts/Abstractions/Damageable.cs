@@ -28,11 +28,9 @@ public abstract class Damageable : MonoBehaviour
         health -= damage;
 
         if (health <= 0)
-            if (OnDie != null)
-                OnDie.Invoke(whoIsAttacking);
-            else
-            if (OnTakeDamage != null)
-                OnTakeDamage.Invoke(whoIsAttacking);
+            OnDie?.Invoke(whoIsAttacking);
+        else
+            OnTakeDamage?.Invoke(whoIsAttacking);
 
         return true;
     }

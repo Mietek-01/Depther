@@ -2,7 +2,7 @@
 
 [RequireComponent(typeof(PlayerDashMoveCreator))]
 [DefaultExecutionOrder(0)]// After the PlayerInput.cs
-public partial class Player : Character
+public partial class Player : PlayerCharacter
 {
     [Header("Player")]
     [SerializeField] WallMovementSO wallMovementSO;
