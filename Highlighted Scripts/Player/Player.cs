@@ -100,7 +100,7 @@ public partial class Player : PlayerCharacter
             GlobalCursor.SetCursorType(GlobalCursor.CursorType.GAMEPLAY);
 
         }
-        catch (System.NullReferenceException e)
+        catch
         {
             Debug.LogWarning("Probably the player is created during the Unit Test, " +
                 "so GameplayManager and GlobalCursor dont exist");
