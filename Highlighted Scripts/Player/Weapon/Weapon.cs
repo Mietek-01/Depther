@@ -114,7 +114,7 @@ public class Weapon : MonoBehaviour, IPlayerKiller
             return;
 
         var bullet = ObjectsPooler.SpawnObjectfFromThePool(basicBulletName, attackPoint.transform.position
-            , Quaternion.identity, GameplayManager._DynamicOfCurrentZone);
+            , Quaternion.identity, GameplayManager.DynamicContainerOfCurrentZone);
 
         // The direction of bullet is depends on the position of the cursor. If it is in the right area
         // and aimingController is not blocked then bullet will be shoot towards the cursor.
@@ -144,7 +144,7 @@ public class Weapon : MonoBehaviour, IPlayerKiller
 
         myStrongBullet.GetComponent<StrongPlayerBulet>().FireOff(ratio);
 
-        myStrongBullet.transform.parent = GameplayManager._DynamicOfCurrentZone;
+        myStrongBullet.transform.parent = GameplayManager.DynamicContainerOfCurrentZone;
 
         myStrongBullet.transform.right = attackPoint.transform.right;
 
@@ -168,7 +168,7 @@ public class Weapon : MonoBehaviour, IPlayerKiller
         if (enemy.Health > 0)
         {
             Instantiate(hitFX, enemy.transform.position, Quaternion.identity
-                , GameplayManager._DynamicOfCurrentZone);
+                , GameplayManager.DynamicContainerOfCurrentZone);
 
             AudioManager.PlayPlayerSFX(enemyHitClip);
         }

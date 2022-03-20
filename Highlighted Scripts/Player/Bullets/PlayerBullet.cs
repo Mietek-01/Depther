@@ -1,32 +1,27 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
 public class PlayerBullet : MonoBehaviour
 {
+    [Header("PlayerBullet")]
     [SerializeField] protected float speed = 20f;
     [SerializeField] protected float lifeTime = 2f;
     [SerializeField] protected int damage = 1;
-    [SerializeField] string spatterFXName = "SpatterFX";
+    [SerializeField] protected string spatterFXName = "SpatterFX";
 
-    [Header("Ref")]
+    [Space(10)]
     [SerializeField] protected GameObject enemyHitFX;
     [SerializeField] protected AudioClip enemyHitClip;
-
-    protected event Action<Enemy, Vector2> OnEnemyCollision;
-    protected event Action<Collision2D> OnPlatformCollision;
 
     int whatIsPlatform;
     int whatIsEnemy;
 
-    bool hitEnemy = false;
+    bool hitEnemy;
 
     protected virtual void Awake()
     {
         whatIsPlatform = LayerMask.NameToLayer("Platform");
         whatIsEnemy = LayerMask.NameToLayer("Enemy");
-
-        SetSubscribers();
     }
 
     protected virtual void Update()
@@ -37,20 +32,20 @@ public class PlayerBullet : MonoBehaviour
     private void OnEnable()
     {
         hitEnemy = false;
-        Invoke("Disable", lifeTime);
+        Invoke(nameof(Disable), lifeTime);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.layer == whatIsPlatform)
-            OnPlatformCollision.Invoke(collision);
+            PlatformCollision(collision);
         else
         if (collision.gameObject.layer == whatIsEnemy)
         {
             var enemy = collision.gameObject.GetComponent<Enemy>();
 
             if (enemy)
-                OnEnemyCollision.Invoke(enemy, collision.GetContact(0).point);
+                EnemyCollision(enemy, collision.GetContact(0).point);
             else
                 Debug.LogWarning("The object with the Enemy layer doesnt have the Enemy script");
         }
@@ -63,51 +58,48 @@ public class PlayerBullet : MonoBehaviour
             var enemy = collision.gameObject.GetComponent<Enemy>();
 
             if (enemy)
-                OnEnemyCollision.Invoke(enemy, collision.transform.position);
+                EnemyCollision(enemy, collision.transform.position);
             else
                 Debug.LogWarning("The object with the Enemy layer doesnt have the Enemy script");
         }
     }
 
-    protected virtual void SetSubscribers()
+    protected virtual void EnemyCollision(Enemy enemy, Vector2 collisionPoint)
     {
-        OnEnemyCollision += (enemy, collisionPoint) =>
+        enemy.TakeDamage(this.gameObject, damage);
+
+        hitEnemy = true;
+
+        if (enemy.Health > 0)
         {
-            enemy.TakeDamage(this.gameObject, damage);
+            var hitFX = Instantiate(enemyHitFX, enemy.transform.position
+                , Quaternion.identity, enemy.transform);
 
-            hitEnemy = true;
+            Destroy(hitFX, 1f);
 
-            if (enemy.Health > 0)
-            {
-                var hitFX = Instantiate(enemyHitFX, enemy.transform.position
-                    , Quaternion.identity, enemy.transform);
+            AudioManager.PlaySFX(enemyHitClip);
+        }
 
-                Destroy(hitFX, 1f);
+        Disable();
+    }
 
-                AudioManager.PlaySFX(enemyHitClip);
-            }
+    protected virtual void PlatformCollision(Collision2D collision)
+    {
+        // Protects againts the excess FX
+        if (hitEnemy)
+            return;
 
-            Disable();
-        };
+        Vector3 FXPosition;
+        Quaternion FXDirection;
 
-        OnPlatformCollision += collision =>
+        if (UsefulFunctions.FindTangentFor(collision, transform.position, out FXPosition
+            , out FXDirection, whatIsPlatform))
         {
-            // It protects againts the excess FX
-            if (hitEnemy)
-                return;
+            ObjectsPooler.PlayParticleSystem(spatterFXName, FXPosition, FXDirection
+                , GameplayManager.DynamicContainerOfCurrentZone);
+        }
 
-            Vector3 FXPosition;
-            Quaternion FXDirection;
-
-            if (UsefulFunctions.FindTangentFor(collision, transform.position, out FXPosition
-                , out FXDirection, whatIsPlatform))
-            {
-                ObjectsPooler.PlayParticleSystem(spatterFXName, FXPosition, FXDirection
-                    , GameplayManager._DynamicOfCurrentZone);
-            }
-
-            Disable();
-        };
+        Disable();
     }
 
     void Disable()

@@ -192,7 +192,7 @@ public class PlayerDashMoveCreator : MonoBehaviour
         for (int i = 1; i <= echosNumber; i++)
         {
             var echo = ObjectsPooler.SpawnObjectfFromThePool(echoFXName, echoPosition
-                , transform.rotation, GameplayManager._DynamicOfCurrentZone).GetComponent<Echo>();
+                , transform.rotation, GameplayManager.DynamicContainerOfCurrentZone).GetComponent<Echo>();
 
             echo.SetWhenDisappear(whenStartDisappearing, i);
 
@@ -217,7 +217,7 @@ public class PlayerDashMoveCreator : MonoBehaviour
         }
 
         ObjectsPooler.PlayParticleSystem(dashMoveFXName, transform.position
-            , Quaternion.Euler(rotation), GameplayManager._DynamicOfCurrentZone);
+            , Quaternion.Euler(rotation), GameplayManager.DynamicContainerOfCurrentZone);
     }
 
     void EnableDashMoveInput(bool value, bool withoutUpperDashMove = false)

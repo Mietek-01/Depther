@@ -36,7 +36,7 @@ public class RevivingHeart : MonoBehaviour
         GetComponent<CinemachineImpulseSource>().GenerateImpulse();
 
         Destroy(Instantiate(reviveFX, transform.position
-            , Quaternion.identity, GameplayManager._DynamicOfCurrentZone), 5f);
+            , Quaternion.identity, GameplayManager.DynamicContainerOfCurrentZone), 5f);
 
         Instantiate(playerPrefab, transform.position + Vector3.up * 2, Quaternion.identity
             , GameplayManager.CurrentZone.transform);

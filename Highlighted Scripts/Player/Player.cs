@@ -73,7 +73,7 @@ public partial class Player : PlayerCharacter
             return false;
         };
 
-        OnDie += (whoIsAttacking) => { Die(whoIsAttacking.GetComponent<IPlayerKiller>().PlayerDeath); };
+        OnDie += (whoIsAttacking) => Die(whoIsAttacking.GetComponent<IPlayerKiller>().PlayerDeath);
     }
 
     protected override void SetReferences()
@@ -133,7 +133,6 @@ public partial class Player : PlayerCharacter
     {
         if (IsGrounded && inputData.Crouch)
         {
-            // The friction is less if the player is after dash move
             myCollider.sharedMaterial.friction = dashMoveCreator.AfterDashing ? .02f : .1f;
 
             anim.SetBool(hashOfIsCrouching, true);
@@ -193,53 +192,36 @@ public partial class Player : PlayerCharacter
 
     private void BoomDeath()
     {
-        Instantiate(boomFX, transform.position, Quaternion.identity, GameplayManager._DynamicOfCurrentZone);
+        Instantiate(boomFX, transform.position, Quaternion.identity, GameplayManager.DynamicContainerOfCurrentZone);
 
-        GameplayManager.StartGameplayReset(4f);
-
-        AudioManager.PlayPlayerVoices(boomDeathClip);
-
-        Destroy(gameObject);
+        MyDeath(boomDeathClip, 4f, 0f);
     }
 
     private void DivisionDeath()
     {
         var dismemberedPlayer = Instantiate(dismemberedPlayerPrefab, transform.position
-            , transform.rotation, GameplayManager._DynamicOfCurrentZone)
+            , transform.rotation, GameplayManager.DynamicContainerOfCurrentZone)
             .GetComponent<DismemberedPlayer>();
 
         var bodyParts = dismemberedPlayer.GetComponentsInChildren<Rigidbody2D>();
+
         Vector2 myVelocity = rb.velocity;
 
         for (int i = 1; i < bodyParts.Length; i++)
             bodyParts[i].velocity = myVelocity * 1.05f;
 
-        // Make setting easier
-        System.Func<Transform, Transform, bool> ApplayFromTo = (from, to) =>
-        {
-            to.localPosition = from.localPosition;
-            to.localEulerAngles = from.localEulerAngles;
-            to.localScale = from.localScale;
-
-            return true;
-        };
-
         // Set dismembered elements
-        ApplayFromTo(transform.Find("Body"), bodyParts[0].transform);
+        UsefulFunctions.CopyTransform(transform.Find("Body"), bodyParts[0].transform);
 
-        ApplayFromTo(transform.Find("Body").transform.Find("Shield"), bodyParts[1].transform);
+        UsefulFunctions.CopyTransform(transform.Find("Body").transform.Find("Shield"), bodyParts[1].transform);
 
-        ApplayFromTo(transform.Find("Body").transform.Find("Head"), bodyParts[2].transform);
+        UsefulFunctions.CopyTransform(transform.Find("Body").transform.Find("Head"), bodyParts[2].transform);
 
-        ApplayFromTo(transform.Find("Leg Left"), bodyParts[3].transform);
+        UsefulFunctions.CopyTransform(transform.Find("Leg Left"), bodyParts[3].transform);
 
-        ApplayFromTo(transform.Find("Leg Right"), bodyParts[4].transform);
+        UsefulFunctions.CopyTransform(transform.Find("Leg Right"), bodyParts[4].transform);
 
-        GameplayManager.StartGameplayReset(4f + dismemberedPlayer.WhenStartDissolve);
-
-        AudioManager.PlayPlayerVoices(deathClip);
-
-        Destroy(gameObject);
+        MyDeath(deathClip, 4f + dismemberedPlayer.WhenStartDissolve, 0f);
     }
 
     private void DissolutionDeath()
@@ -255,37 +237,35 @@ public partial class Player : PlayerCharacter
         transform.Find("Leg Left").GetComponent<SpriteRenderer>().material = dissolutionMaterial;
         transform.Find("Leg Right").GetComponent<SpriteRenderer>().material = dissolutionMaterial;
 
-        GameplayManager.StartGameplayReset(5f);
-
-        AudioManager.PlayPlayerVoices(deathClip);
-
         Destroy(weapon.gameObject);
-        Destroy(gameObject, 3f);
+
+        MyDeath(deathClip, 5f, 3f);
     }
 
     private void FallDeath()
     {
         enabled = false;
 
-        Invoke("DisableCameraFollow", .5f);
+        Invoke(nameof(DisableCameraFollow), .5f);
 
-        GameplayManager.StartGameplayReset(4f);
-
-        AudioManager.PlayPlayerVoices(deathClip);
-
-        Destroy(gameObject, 2f);
+        MyDeath(deathClip, 4f, 2f);
     }
 
     private void ExplosionDeath()
     {
         Destroy(Instantiate(explosionFX, transform.position, Quaternion.identity
-        , GameplayManager._DynamicOfCurrentZone), 5f);
+        , GameplayManager.DynamicContainerOfCurrentZone), 5f);
 
-        GameplayManager.StartGameplayReset(4f);
+        MyDeath(deathClip, 4f, 0f);
+    }
 
-        AudioManager.PlayPlayerVoices(deathClip);
+    private void MyDeath(AudioClip clip, float whenGameplayReset, float whenDestroy)
+    {
+        GameplayManager.StartGameplayReset(whenGameplayReset);
 
-        Destroy(gameObject);
+        AudioManager.PlayPlayerVoices(clip);
+
+        Destroy(gameObject, whenDestroy);
     }
 
     #endregion

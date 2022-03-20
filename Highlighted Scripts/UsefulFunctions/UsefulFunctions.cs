@@ -180,6 +180,13 @@ public static class UsefulFunctions
 
     #endregion
 
+    public static void CopyTransform(Transform from, Transform to)
+    {
+        to.localPosition = from.localPosition;
+        to.localEulerAngles = from.localEulerAngles;
+        to.localScale = from.localScale;
+    }
+
     public static float GetLengthOfClip(Animator anim, string clipName)
     {
         //anim.GetCurrentAnimatorStateInfo(0).length
